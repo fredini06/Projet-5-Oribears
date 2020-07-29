@@ -12,7 +12,13 @@ xhr.onload = function() {
 
 
 function showTeddies(jsonObj) {
-    let myH1 = document.createElement("h1");
-    myH1.textContent = jsonObj[0]['colors'][2];
-    section.appendChild(myH1);
+    document.getElementById("name").innerHTML = jsonObj[0]['name'];
+    document.getElementById("description").innerHTML = jsonObj[0]['description'];
+    document.getElementById("price").innerHTML = jsonObj[0]['price'];
+    
+    let im = document.getElementById("image");
+    let imUrl = jsonObj[0]['imageUrl'];
+    im.src = imUrl;
 };
+
+
