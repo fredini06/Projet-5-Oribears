@@ -70,10 +70,17 @@ body{
     margin: 0 auto;
     width: 150px;
     height: 50px;
+    line-height: 40px;
     border-radius: 25px;
     background-color: #fff;
     cursor: pointer;
     text-align: center;
+    box-shadow: 2px 2px 5px #000;
+    transition: all .4s ease;
+}
+
+.card_form:hover{
+    background-color: deepskyblue;
 }
 
 
