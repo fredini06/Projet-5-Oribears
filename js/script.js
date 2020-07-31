@@ -40,19 +40,27 @@ fetch("http://localhost:3000/api/teddies")
 
 
     function showTeddies(tab){
-        for (i=0; i < tab.length; i++) {
-        document.getElementById("name").innerHTML = tab[i]['name'];
-        document.getElementById("description").innerHTML = tab[i]['description'];
-        let prix = tab[i]['price'];
+        document.getElementById("name").innerHTML = tab[0]['name'];
+        document.getElementById("description").innerHTML = tab[0]['description'];
+        let prix = tab[0]['price'];
         document.getElementById("price").innerHTML = prix /100;
         let im = document.getElementById("image");
-        let imUrl = tab[i]['imageUrl'];
+        let imUrl = tab[0]['imageUrl'];
         im.src = imUrl;
-        }
-        for(i=0; i < (tab.length -1); i++){
+        
+        for(i=1; i < tab.length; i++){
             let item = document.getElementById("container");
             let clone = item.cloneNode(true);
-            document.querySelector("body").appendChild(clone);
+            clone.id = "container" + i; 
+            document.getElementById("ajout").appendChild(clone);  
+            let cont = document.getElementById("container" + i);
+            document.getElementById("name").innerHTML = tab[i]['name'];
+            document.getElementById("description").innerHTML = tab[i]['description'];
+            let prix = tab[i]['price'];
+            document.getElementById("price").innerHTML = prix /100;
+            let im = document.getElementById("image");
+            let imUrl = tab[i]['imageUrl'];
+            im.src = imUrl;
         }
     };
 
