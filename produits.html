@@ -53,7 +53,7 @@
           </nav>
         <!-- NAVBAR ENDS-->   
         
-        <div class="legend">Personnalisez votre ourson</div>
+        <!-- <div class="legend">Personnalisez votre ourson</div>
         <section class="container" id="container">
             <div class="card_prod">
                 <article name="données" class="form_prod"> 
@@ -75,7 +75,32 @@
                     </div>
                 </article>
             </div>
-        </section>
+        </section> -->
+
+        <div class="legend">Personnalisez votre ourson</div>
+        <div class="card_prod">
+            <div class="card__info">
+                <img id ="image" src="#" width = 600px height = 400px  alt="ours en peluche"><br>
+                <p id="name">Nom : </p>
+                <p id="description">Description : </p>
+                <p id="price" class="prix">Prix : </p>
+                <p class="euros">euros</p>
+                <form method="post" action="ton_action" class="select_prod">
+                    <p>
+                        <label for="color">Choisissez la couleur :</label><br />
+                        <select name="couleur" id="couleur">
+                            <option value="ta_valeur">couleur 1</option>
+                            <option value="ta_valeur">couleur 2</option>
+                        </select>
+                    </p>
+                 </form>
+                <div class="card_btn">
+                    <a href="panier.html" class="btn btn_prod">Valider</a>
+                </div>
+
+            </div>
+        </div>
+        
 
             
         <!-- FOOTER -->
@@ -113,6 +138,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="/js/script.js" type="text/javascript"></script>
+    <script src="/js/scriptProd.js" type="text/javascript"></script>
 </body>
 </html>
