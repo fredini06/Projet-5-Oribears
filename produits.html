@@ -81,21 +81,19 @@
         <div class="card_prod">
             <div class="card__info">
                 <img id ="image" src="#" width = 600px height = 400px  alt="ours en peluche"><br>
-                <p id="name">Nom : </p>
-                <p id="description">Description : </p>
-                <p id="price" class="prix">Prix : </p>
-                <p class="euros">euros</p>
+                <p id="name"><span class = "soulign">Nom</span> : </p>
+                <p id="description"><span class = "soulign">Description</span> : </p>
+                <p id="price" class="prix"><span class = "soulign">Prix</span> : </p>
+                <p class="euros">euros</p><br><br>
                 <form method="post" action="ton_action" class="select_prod">
                     <p>
                         <label for="color">Choisissez la couleur :</label><br />
                         <select name="couleur" id="couleur">
-                            <option value="ta_valeur">couleur 1</option>
-                            <option value="ta_valeur">couleur 2</option>
                         </select>
                     </p>
                  </form>
-                <div class="card_btn">
-                    <a href="panier.html" class="btn btn_prod">Valider</a>
+                <div id="card_btn">
+                    <a href="panier.html" class="btn btn_prod" id="btnValid">Valider</a>
                 </div>
 
             </div>
