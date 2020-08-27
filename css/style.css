@@ -208,3 +208,10 @@ margin: 0 auto 25px;
 #card_btn2:hover{
     background-color: deepskyblue;
 }
+
+#qte{
+    display: inline-block;
+    padding: 0 15px;
+    margin: 10px;
+    border: 1px solid #000;
+}
