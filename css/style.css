@@ -17,6 +17,13 @@ body{
 
 /* Navbar */
 
+.navbar{
+    position: fixed !important;
+    top: 0;
+    width: 100%; 
+    z-index: 3;  
+}
+
 .navbar ul li a{
     color: #fff !important;
     text-transform: uppercase;
@@ -30,10 +37,24 @@ body{
     color: deepskyblue !important;
 }
 
+.nav-item{
+    position: relative !important;;
+}
+
+#cart-items{
+    position: absolute;
+    top: -8px;
+    right: 15px;
+    background-color: #fff;
+    padding: 0 5px;
+    border-radius: 30%;
+    font-weight: bold;
+}
+
 /* Navbar ends */
 
 .legend{
-    margin: 50px auto;
+    margin: 150px auto 50px;
     text-align: center;
     font-size: 60px;
 }
@@ -63,7 +84,7 @@ body{
 }
 
 .container{
-    margin-bottom: 100px;
+    margin-bottom: 70px;
 }
 
 .soulign{
@@ -73,7 +94,7 @@ body{
 
 #card_btn{
     margin: 0 auto;
-    width: 150px;
+    width: 200px;
     height: 50px;
     line-height: 40px;
     border-radius: 25px;
@@ -193,10 +214,9 @@ margin: 0 auto 25px;
 }
 
 #card_btn2 {
-    margin: 0 auto;
+    margin: 50px auto 0;
     width: 150px;
     height: 50px;
-    line-height: 40px;
     border-radius: 25px;
     background-color: rgb(150, 148, 148);
     cursor: pointer;
@@ -215,3 +235,15 @@ margin: 0 auto 25px;
     margin: 10px;
     border: 1px solid #000;
 }
+
+.table__caption{
+    font-size: 30px;;
+}
+
+input:invalid {
+    border: 2px dashed red;
+  }
+  
+  input:valid {
+    border: 3px solid deepskyblue;
+  }
