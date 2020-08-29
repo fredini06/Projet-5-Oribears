@@ -4,13 +4,16 @@ console.log(tabRec);
 console.log(qteRec);
 console.log(typeof qteRec);
 let tabRecJson = JSON.parse(tabRec);
-console.log(tabRecJson);
-console.log(tabRecJson.nom);
+console.log("Le tab est", tabRecJson);
 
-let tr = document.createElement("tr");
-let htmlTr = `<tr><td>${tabRecJson.nom}</td><td>${tabRecJson.couleur}</td><td>${tabRecJson.prix} €</td><ion-icon name="caret-back-outline" id="decBtn"></ion-icon><p id="qte">${qteRec}</p><ion-icon name="caret-forward-outline" id="incBtn"></ion-icon></tr><td id="price">${tabRecJson.prix * qteRec} €</td>`;
+
+for (let i = 0; i < tabRecJson.length; i++) {
+    let tr = document.createElement("tr");
+    let htmlTr = `<tr><td>${tabRecJson[i].nom}</td><td>${tabRecJson[i].couleur}</td><td>${tabRecJson[i].prix} €</td><ion-icon name="caret-back-outline" id="decBtn"></ion-icon><p id="qte">${qteRec}</p><ion-icon name="caret-forward-outline" id="incBtn"></ion-icon></tr><td id="price">${tabRecJson[i].prix * qteRec} €</td>`;
 tr.innerHTML = htmlTr;
 document.getElementById('table__body').appendChild(tr);
+
+
 
 let qteString = document.getElementById('qte');
 let qte = parseInt(qteString.textContent, 10);
@@ -25,7 +28,7 @@ let incBtn = document.getElementById('incBtn');
 incBtn.addEventListener('click', function() {
     qte++;
     qteString.innerHTML = qte;
-    price.innerHTML = `${tabRecJson.prix * qte} €`;
+    price.innerHTML = `${tabRecJson[i].prix * qte} €`;
     localStorage.setItem("Quantité", qte);
 });
 
@@ -37,8 +40,9 @@ decBtn.addEventListener('click', function() {
         qte = 1;
     }else {        
         qteString.innerHTML = qte;
-        price.innerHTML = `${tabRecJson.prix * qte} €`;
+        price.innerHTML = `${tabRecJson[i].prix * qte} €`;
     }
     localStorage.setItem("Quantité", qte);
 });
 
+}

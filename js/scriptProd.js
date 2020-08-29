@@ -1,4 +1,3 @@
-
 let idRecup = location.search;
 let idReelle = idRecup.substring(4);
 // console.log(idReelle);
@@ -17,6 +16,35 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
                 // console.log(obj);
             })            
     });
+    
+    let tabVide = [];
+
+    let verifLocalStore = localStorage.getItem("TabStore");
+    if (verifLocalStore == undefined) {
+        console.log("LocalStorage vide");
+    } else {
+        console.log("Au chargement de la page, le localStorage est", verifLocalStore);
+        let tabParse = JSON.parse(verifLocalStore);
+        console.log("tabParse", tabParse);
+        
+        for (let i=0; i < tabParse.length; i++) {
+            tabVide.push(tabParse[i]);
+            console.log("Ajout du localStorage dans le tableau vide", tabVide);
+        }
+    }
+
+
+
+// let verifLocalStore = localStorage.getItem("TabStore");
+// if (verifLocalStore == undefined) {
+//     console.log("LocalStorage vide");
+// } else {
+//     console.log("Au chargement de la page, le localStorage est", verifLocalStore);
+//     tabVide.push(verifLocalStore);
+//     console.log("Ajout du localStorage dans le tableau vide", tabVide);
+// }
+
+
 
     function showTeddy(tab) {
         // console.log(tab);
@@ -29,10 +57,7 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
         im.src = imUrl;
 
         let color = document.getElementById('couleur');
-        console.log(color);
-        console.log(tab.colors.length);
-
- 
+        // console.log("Le select est", color);
 
         // Boucle pour ajouter les options à la balise select avec le tableau "tab"
         for (let i=0; i < tab.colors.length; i++) {
@@ -42,7 +67,8 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
         let btnValid = document.getElementById('btnValid');
         btnValid.addEventListener('click', function() {
             let aff = color.options[color.selectedIndex].text;
-            console.log(aff);
+            // console.log(aff);
+
             // Récupération des données dans un tableau
             let tabRecap = {
                 nom: tab.name,
@@ -50,10 +76,17 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
                 prix: tab.price/100,
                 couleur: aff
             };
-            console.log(tabRecap);
-            let objTab = JSON.stringify(tabRecap);
-            console.log(objTab);
-            localStorage.setItem("TabStore", objTab);
+            console.log("Tableau page actuelle", tabRecap);
+
+            tabVide.push(tabRecap);
+            console.log("Nouveau tab",tabVide);
+            let tabRecJson = JSON.stringify(tabVide);
+            console.log("tabJson", tabRecJson);
+            localStorage.setItem("TabStore", tabRecJson);
+
+            // let objTab = JSON.stringify(tabRecap);
+            // console.log(objTab);
+            // localStorage.setItem("TabStore", objTab);
 
             // Panier animé
             // let cartItemsString = document.getElementById('cart-items');
@@ -66,4 +99,27 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
 
     }
 
-    
+
+    // let btnValid = document.getElementById('btnValid');
+    //     btnValid.addEventListener('click', function() {
+    //         let aff = color.options[color.selectedIndex].text;
+    //         console.log(aff);
+
+    //         // Récupération des données dans un tableau
+    //         let tabRecap = {
+    //             nom: tab.name,
+    //             description: tab.description,
+    //             prix: tab.price/100,
+    //             couleur: aff
+    //         };
+    //         console.log(tabRecap);
+
+    //         tabVide.push(tabRecap);
+    //         console.log("Ntab",tabVide);
+    //         let tabRecJson = JSON.stringify(tabVide);
+    //         console.log("tabJson", tabRecJson);
+    //         localStorage.setItem("TabStore", tabRecJson);
+
+    //         cartItemsString.innerHTML = cartCount;
+    //         localStorage.setItem("Quantité", cartCount);
+    //     })
