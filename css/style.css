@@ -182,7 +182,7 @@ caption {
 
 /* Panier */
 
-#incBtn, #decBtn {
+.incBtn, .decBtn {
     cursor: pointer;
 }
 
@@ -229,7 +229,7 @@ margin: 0 auto 25px;
     background-color: deepskyblue;
 }
 
-#qte{
+.qte{
     display: inline-block;
     padding: 0 15px;
     margin: 10px;

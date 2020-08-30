@@ -4,7 +4,11 @@ let idReelle = idRecup.substring(4);
 
 let cartCount = localStorage.getItem("Quantité");
 let cartItemsString = document.getElementById('cart-items');
-cartItemsString.innerHTML = cartCount;
+if (cartCount == undefined) {
+    cartItemsString.innerHTML = 0;
+}else {
+    cartItemsString.innerHTML = cartCount;
+}
 
 fetch("http://localhost:3000/api/teddies/" + idReelle)
     .then(function (response) {
@@ -19,32 +23,20 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
     
     let tabVide = [];
 
+    // Vérification de localStorage et initialisation de son contenu
     let verifLocalStore = localStorage.getItem("TabStore");
     if (verifLocalStore == undefined) {
         console.log("LocalStorage vide");
     } else {
-        console.log("Au chargement de la page, le localStorage est", verifLocalStore);
+        console.log("localStorage existant", verifLocalStore);
         let tabParse = JSON.parse(verifLocalStore);
-        console.log("tabParse", tabParse);
+        // console.log("tabParse", tabParse);
         
         for (let i=0; i < tabParse.length; i++) {
             tabVide.push(tabParse[i]);
-            console.log("Ajout du localStorage dans le tableau vide", tabVide);
+            // console.log("Ajout du localStorage dans le tableau ", tabVide);
         }
     }
-
-
-
-// let verifLocalStore = localStorage.getItem("TabStore");
-// if (verifLocalStore == undefined) {
-//     console.log("LocalStorage vide");
-// } else {
-//     console.log("Au chargement de la page, le localStorage est", verifLocalStore);
-//     tabVide.push(verifLocalStore);
-//     console.log("Ajout du localStorage dans le tableau vide", tabVide);
-// }
-
-
 
     function showTeddy(tab) {
         // console.log(tab);
@@ -74,24 +66,33 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
                 nom: tab.name,
                 description: tab.description,
                 prix: tab.price/100,
+                id: tab._id,
                 couleur: aff
             };
-            console.log("Tableau page actuelle", tabRecap);
+            // console.log("Tableau page actuelle", tabRecap);
 
             tabVide.push(tabRecap);
-            console.log("Nouveau tab",tabVide);
-            let tabRecJson = JSON.stringify(tabVide);
-            console.log("tabJson", tabRecJson);
-            localStorage.setItem("TabStore", tabRecJson);
+            // console.log("Nouveau tab",tabVide);
 
-            // let objTab = JSON.stringify(tabRecap);
-            // console.log(objTab);
-            // localStorage.setItem("TabStore", objTab);
+            let tabId = [];
+            for (a = 0; a < tabVide.length; a++) {
+                console.log(tabVide[a].nom, tabVide[a].couleur);
+                let id = tabVide[a].nom + tabVide[a].couleur;
+                console.log(id);
+                tabId.push(id);
+                console.log(tabId);
+                console.log(tabId.includes(id));
+            }
+
+            let tabRecJson = JSON.stringify(tabVide);
+            // console.log("tabJson", tabRecJson);
+            localStorage.setItem("TabStore", tabRecJson);
 
             // Panier animé
             // let cartItemsString = document.getElementById('cart-items');
             // console.log(typeof cartItemsString.textContent);
             // let cartItems = parseInt(cartItemsString.textContent, 10);
+            
             cartCount++;
             cartItemsString.innerHTML = cartCount;
             localStorage.setItem("Quantité", cartCount);

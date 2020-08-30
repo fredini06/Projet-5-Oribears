@@ -1,6 +1,10 @@
 let cartCount = localStorage.getItem("Quantité");
 let cartItemsString = document.getElementById('cart-items');
-cartItemsString.innerHTML = cartCount;
+if (cartCount == undefined) {
+    cartItemsString.innerHTML = 0;
+}else {
+    cartItemsString.innerHTML = cartCount;
+}
 
 fetch("http://localhost:3000/api/teddies")
     .then(function (response) {
