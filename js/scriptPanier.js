@@ -46,6 +46,6 @@ for (let i = 0; i < tabRecJson.length; i++) {
     
 };
 
-// let tName = document.querySelectorAll ("td");
+// let tName = document.querySelector(".tName");
 // console.log(tName);
-// tName[0].innerHTML = "test";
+// tName.innerHTML = "test";

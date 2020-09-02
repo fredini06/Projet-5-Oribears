@@ -11,6 +11,7 @@ fetch("http://localhost:3000/api/teddies")
         response.json()
             .then(function (value) {
                 showTeddies(value);
+                console.log(value);
             })            
     });
 
