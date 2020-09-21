@@ -186,6 +186,10 @@ caption {
     cursor: pointer;
 }
 
+.formPanier{
+    margin-top: 75px;
+}
+
 .formPanier input{
     display: block;
     margin: 0 auto 25px;
@@ -236,6 +240,23 @@ margin: 0 auto 25px;
     border: 1px solid #000;
 }
 
+.sTotal{
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    background-color: rgb(150, 148, 148);
+    width: 1120px;
+    padding-top: 10px;
+}
+
+.sTotal p{
+    margin-left: 11px;
+}
+
+.sTotalPrix{
+    margin-right: 260px;
+}
+
 .table__caption{
     font-size: 30px;;
 }
@@ -247,3 +268,4 @@ input:invalid {
   input:valid {
     border: 3px solid deepskyblue;
   }
+

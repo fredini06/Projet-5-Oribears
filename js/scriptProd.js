@@ -57,7 +57,6 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
             color[i] = new Option(tab.colors[i], tab.colors[i]);
         }
 
-        // let tabId = [];
         let tabId = localStorage.getItem('TabId');
         tabId = JSON.parse(tabId);
         let amount = 0;
@@ -74,31 +73,51 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
                 description: tab.description,
                 prix: tab.price/100,
                 id: tab._id,
-                couleur: aff
+                couleur: aff,
+                qte: 0
             };
             console.log("Tableau page actuelle", tabRecap);
 
+            tabRecap.qte++;
+
             // Vérification de la présence du produit dans le panier
-            if (tabId.find(elt => elt === tabRecap.nom + tabRecap.couleur)) {
+            if (tabId == undefined) {
+                tabId = [];
+                tabId.push(tabRecap.nom + tabRecap.couleur);
+                console.log("Nom produit :", tabId);
+            } else if (tabId.find(elt => elt === tabRecap.nom + tabRecap.couleur)) {
                 alert("Ce produit est déjà présent dans le panier");
                 return
             }else {
-                tabId.push(tabRecap.nom + tabRecap.couleur)
-                console.log(tabId);
+                tabId.push(tabRecap.nom + tabRecap.couleur);
+                console.log("Noms produits :", tabId);
             };
 
             tabVide.push(tabRecap);
+
+            let cartCost = localStorage.getItem('CoutTotal');
+            
+            // Ajout du total commandé au localStorage
+            if(cartCost != null) {
+                cartCost = parseInt(cartCost);
+                localStorage.setItem('CoutTotal', cartCost + (tab.price/100));
+            } else {
+                localStorage.setItem('CoutTotal', tab.price/100);
+            }
+            
             
             let tabRecJson = JSON.stringify(tabVide);
             // console.log("tabJson", tabRecJson);
             localStorage.setItem("TabStore", tabRecJson);
             let tabIdJson = JSON.stringify(tabId);
-            console.log(tabIdJson);
+            // console.log(tabIdJson);
             localStorage.setItem("TabId", tabIdJson);
+
             
             cartCount++;
             cartItemsString.innerHTML = cartCount;
             localStorage.setItem("Quantité", cartCount);
+            
         })
     }
 
