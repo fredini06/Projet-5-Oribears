@@ -254,11 +254,19 @@ margin: 0 auto 25px;
 }
 
 .sTotalPrix{
-    margin-right: 260px;
+    margin-right: 395px;
+}
+
+.supprime{
+    font-size: 13px;
+}
+
+.supprime:hover{
+    cursor: pointer;
 }
 
 .table__caption{
-    font-size: 30px;;
+    font-size: 30px;
 }
 
 input:invalid {
