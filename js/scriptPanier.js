@@ -31,9 +31,7 @@ for (let i = 0; i < tabRecJson.length; i++) {
         totalCost = parseInt(totalCost);
         qte++;
         qteRec++;
-        console.log("quantité", qteRec);
         qteString[i].innerHTML = qte;
-        console.log("test-apres", tabRecJson);
         price[i].innerHTML = `${tabRecJson[0].prix * qte} €`;
         tabRecJson[i].qte +=1;
         totalCost = totalCost + (tabRecJson[i].prix);
@@ -59,7 +57,6 @@ for (let i = 0; i < tabRecJson.length; i++) {
             qteString[i].innerHTML = qte;
             price[i].innerHTML = `${tabRecJson[i].prix * qte} €`;
             tabRecJson[i].qte -=1;
-            console.log(tabRecJson);
             totalCost = totalCost - (tabRecJson[i].prix);
             localStorage.setItem("CoutTotal", totalCost);
             localStorage.setItem("Quantité", qteRec);
@@ -68,19 +65,19 @@ for (let i = 0; i < tabRecJson.length; i++) {
         };        
     });
 
+
     // Bouton Supprimer
     let btnSup = document.querySelectorAll('.supprime');
     btnSup[i].addEventListener('click', function(e) {
-        console.log(i);
         var btnclick = e.target;
         btnclick.parentElement.remove();
         tabRecJson.splice(i, 1);
         // document.getElementById('table__body').removeChild(tr);
-        totalCost = totalCost - (tabRecJson[i].prix);
+        // totalCost = totalCost - (tabRecJson[i].prix);
+        totalCost = totalCost - (tabRecJson[i].prix * tabRecJson[i].qte);
         localStorage.setItem("CoutTotal", totalCost);
         document.getElementsByClassName('sTotalPrix')[0].innerHTML = totalCost + ' €';
         localStorage.setItem("TabStore", JSON.stringify(tabRecJson));
-        console.log("test", tabRecJson);
         document.location.reload();
     });
     
