@@ -18,8 +18,8 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
                 // console.log(value);
                 let obj = JSON.stringify(value);
                 // console.log(obj);
-            })            
-    });
+        })            
+    }).catch((err) => console.log('ERREUR : ', err));
     
     let tabVide = [];
 
@@ -59,7 +59,6 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
 
         let tabId = localStorage.getItem('TabId');
         tabId = JSON.parse(tabId);
-        let amount = 0;
 
         // Ajouter un produit
         let btnValid = document.getElementById('btnValid');
@@ -83,13 +82,13 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
             // Vérification de la présence du produit dans le panier
             if (tabId == undefined) {
                 tabId = [];
-                tabId.push(tabRecap.nom + tabRecap.couleur);
+                tabId.push(tabRecap.nom + tabRecap.couleur, tabRecap.qte);
                 console.log("Nom produit :", tabId);
             } else if (tabId.find(elt => elt === tabRecap.nom + tabRecap.couleur)) {
                 alert("Ce produit est déjà présent dans le panier");
                 return
             }else {
-                tabId.push(tabRecap.nom + tabRecap.couleur);
+                tabId.push(tabRecap.nom + tabRecap.couleur, tabRecap.qte);
                 console.log("Noms produits :", tabId);
             };
 

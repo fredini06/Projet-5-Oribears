@@ -1,11 +1,3 @@
-let cartCount = localStorage.getItem("quantité");
-let cartItemsString = document.getElementById('cart-items');
-if (cartCount == undefined) {
-    cartItemsString.innerHTML = 0;
-}else {
-    cartItemsString.innerHTML = cartCount;
-}
-
 fetch("http://localhost:3000/api/teddies")
     .then(function (response) {
         response.json()
@@ -25,6 +17,12 @@ fetch("http://localhost:3000/api/teddies")
         })
     };
 
-   
-
+    function onLoadQuantity() {
+        let qty = localStorage.getItem('quantity');
     
+        if (qty) {
+            document.getElementById('cart-items').textContent = qty;
+        }
+    };
+
+    onLoadQuantity();

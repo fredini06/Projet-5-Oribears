@@ -92,23 +92,15 @@ for (let i = 0; i < tabRecJson.length; i++) {
     
 };
 
+function onLoadQuantity() {
+    let qty = localStorage.getItem('quantity');
 
-// Bouton Supprimer
-// for (let i = 0; i < tabRecJson.length; i++) {
-//     let btnSup = document.querySelectorAll('.supprime');
-//     btnSup[i].addEventListener('click', function(e) {
-//         console.log(i);
-//         var btnclick = e.target;
-//         btnclick.parentElement.remove();
-//         tabRecJson.splice(i, 1);
-//         totalCost = totalCost - (tabRecJson[i].prix);
-//         localStorage.setItem("CoutTotal", totalCost);
-//         document.getElementsByClassName('sTotalPrix')[0].innerHTML = totalCost + ' €';
-//         localStorage.setItem("TabStore", JSON.stringify(tabRecJson));
-//         console.log("test", tabRecJson[i]);
-//     });
+    if (qty) {
+        document.getElementById('cart-items').textContent = qty;
+    }
+};
 
-// };
+onLoadQuantity();
 
 
 // Formulaire
