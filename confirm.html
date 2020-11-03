@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="manifest" href="/site.webmanifest">
 
-    <title>Panier - Oribears</title>
+    <title>Page de validation - Oribears</title>
 </head>
 <body>
 
@@ -44,63 +44,21 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Contacts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/panier.html">Panier</a>
+                    <div id="cart-items">0</div>
                 </li>   
               </ul>
             </div>
           </nav>
         <!-- NAVBAR ENDS-->   
         
-        <div class="legend">Votre panier</div>
+        <div class="legend">Récapitulatif de votre commande</div>
         <section class="container" id="container">
-            <table class="table">
-                <caption class="table__caption">Récapitulatif de votre commande</caption>
-                <thead class="table__head">
-                    <tr class="table__head--title">
-                        <th>Produits</th>
-                        <th>Couleur</th>
-                        <th>Prix</th>
-                        <th>Quantité</th>
-                        <th>Total articles</th>
-                    </tr>
-                </thead>
-                <tbody id="table__body">
-                   
-                </tbody>
-            </table>
-            <div class="sTotal">
-                <!-- <p>Sous-total</p> -->
-            </div>
-            
-            <div class="products"></div>
-            
-            <form action="confirmation.html" class="formPanier">
-                <div class="formPanier__info">
-                    <legend class="formPanier__info--legend">Vos coordonnées :</legend>
-                    <label class ="lab" for="nom">Nom :</label>
-                    <input type="text" name="nom" id="nom" required>
-                    <label class ="lab" for="prenom">Prénom :</label>
-                    <input type="text" name="prenom" id="prenom" required>
-                    <label class ="lab" for="mail">E-mail :</label>
-                    <input type="email" name="mail" id="mail" required>
-                    <label class ="lab" for="phone">Téléphone :</label>
-                    <input type="tel" name="phone" id="phone" required>
-                </div>
-                <div class="form__address">
-                    <legend class="form__address--legend">Adresse de livraison : </legend>
-                    <label class ="lab" for="adresse">Adresse :</label>
-                    <input type="text" name="adresse" id="adresse" required>
-                    <label class ="lab" for="zip">Code postal :</label>
-                    <input type="text" name="zip" id="zip" required>
-                    <label class ="lab" for="ville">Ville :</label>
-                    <input type="text" name="ville" id="ville" required>
-                    <label class ="lab" for="pays">Pays :</label>
-                    <input type="text" name="pays" id="pays" required>
-                </div>
-            </form>
-
-            <div class="card_btn" id="card_btn2">
-                <a href="confirm.html" class="btn btn_prod">Valider</a>
-            </div>
+            <div class="adress">Adresse de livraison</div>
+            <div class="valid">Validation de votre commande</div>
+            <div class="montTotal">Montant total :</div>
         </section>
 
             
@@ -140,6 +98,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
-    <script src="/js/scriptPanier.js" type="text/javascript"></script>
+    <script src="/js/scriptConfirm.js" type="text/javascript"></script>
 </body>
 </html>
