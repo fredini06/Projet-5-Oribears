@@ -1,114 +1,207 @@
-let tabRec = localStorage.getItem("TabStore");
-let qteRec = localStorage.getItem("Quantité");
-let tabId = localStorage.getItem("TabId");
-tabId = JSON.parse(tabId);
-qteRec = parseInt(qteRec);
-let tabRecJson = JSON.parse(tabRec);
-
-// Sous-total
-let totalCost = localStorage.getItem('CoutTotal');
-totalCost = parseInt(totalCost);
-let div = document.createElement("div");
-let htmlDiv = `<div class="sTotalPrix">${totalCost} €</div>`;
-div.innerHTML = htmlDiv;
-document.getElementsByClassName('sTotal')[0].appendChild(div);
-
-for (let i = 0; i < tabRecJson.length; i++) {
-    let tr = document.createElement("tr");
-    let htmlTr = `<tr><td class = "tName">${tabRecJson[i].nom}</td><td class = "tColor">${tabRecJson[i].couleur}</td><td>${tabRecJson[i].prix} €</td><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="qte">${tabRecJson[i].qte}</p><ion-icon name="caret-forward-outline" class="incBtn"></ion-icon></tr><td class="price">${tabRecJson[i].prix * tabRecJson[i].qte} €</td><td class="supprime">Supprimer</td>`;
-    tr.innerHTML = htmlTr;
-    document.getElementById('table__body').appendChild(tr);
-
-    let qteString = document.querySelectorAll('.qte');
-    let qte = parseInt(qteString[i].textContent, 10);
-
-    // Flèche Augmenter quantité
-    let price = document.querySelectorAll('.price');
-    let incBtn = document.querySelectorAll('.incBtn');
-    incBtn[i].addEventListener('click', function() {
-        let totalCost = localStorage.getItem('CoutTotal');
-        totalCost = parseInt(totalCost);
-        qte++;
-        qteRec++;
-        qteString[i].innerHTML = qte;
-        price[i].innerHTML = `${tabRecJson[0].prix * qte} €`;
-        tabRecJson[i].qte +=1;
-        totalCost = totalCost + (tabRecJson[i].prix);
-        localStorage.setItem("CoutTotal", totalCost);
-        localStorage.setItem("Quantité", qteRec);
-        document.getElementsByClassName('sTotalPrix')[0].innerHTML = totalCost + ' €';
-        
-        localStorage.setItem("TabStore", JSON.stringify(tabRecJson));
-        
-    });
-
-
-    // Flèche Baisser quantité
-    let decBtn = document.querySelectorAll('.decBtn');
-    decBtn[i].addEventListener('click', function() {
-        let totalCost = localStorage.getItem('CoutTotal');
-        totalCost = parseInt(totalCost);
-        qte--;
-        qteRec--;
-        if (qte < 1) {
-            qte = 1;
-        }else {        
-            qteString[i].innerHTML = qte;
-            price[i].innerHTML = `${tabRecJson[i].prix * qte} €`;
-            tabRecJson[i].qte -=1;
-            totalCost = totalCost - (tabRecJson[i].prix);
-            localStorage.setItem("CoutTotal", totalCost);
-            localStorage.setItem("Quantité", qteRec);
-            document.getElementsByClassName('sTotalPrix')[0].innerHTML = totalCost + ' €';
-            localStorage.setItem("TabStore", JSON.stringify(tabRecJson));
-        };        
-    });
-
-
-    // Bouton Supprimer
-    let btnSup = document.querySelectorAll('.supprime');
-    btnSup[i].addEventListener('click', function(e) {
-        var btnclick = e.target;
-        btnclick.parentElement.remove();
-        tabRecJson.splice(i, 1);
-        // document.getElementById('table__body').removeChild(tr);
-        // totalCost = totalCost - (tabRecJson[i].prix);
-        totalCost = totalCost - (tabRecJson[i].prix * tabRecJson[i].qte);
-        localStorage.setItem("CoutTotal", totalCost);
-        document.getElementsByClassName('sTotalPrix')[0].innerHTML = totalCost + ' €';
-        localStorage.setItem("TabStore", JSON.stringify(tabRecJson));
-        document.location.reload();
-    });
-
-    // let btnSup = document.querySelectorAll('.supprime');
-    // let productName;
-    // btnSup[i].addEventListener('click', () => {
-    //     productNumber = document.querySelectorAll('.qte');
-    //     console.log(productNumber[i].textContent);
-    //     productNumber = productNumber[i].textContent;
-        
-
-    // });
+function cartDisplay() {
+    let cartItems = localStorage.getItem('panier');
+    cartItems = JSON.parse(cartItems);
+    let totalCost = localStorage.getItem('prixTotal');
+    totalCost = parseInt(totalCost);
     
+    if(cartItems) {
+        Object.values(cartItems).map(item => {
+            let tr = document.createElement("tr");
+            tr.innerHTML = `
+            <td class="tName">${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime">Supprimer</td>
+            `;
+            document.getElementById('table__body').appendChild(tr);
+            
+            // Sous-total
+            let div = document.querySelector('.sTotal');
+            div.innerHTML = `<p>Sous-total</p><span class="sTotalPrix">${totalCost} €</span>`;
+
+        }); 
+    };
+
+    deleteBtn()
+    quantityBtn()
 };
 
+function deleteBtn() {
+    let deleteBtn = document.querySelectorAll('.supprime');
+    let productName;
+    let productColor;
+    let productNb = localStorage.getItem('quantity');
+    let prixTotal = localStorage.getItem('prixTotal')
+    let cartItems = localStorage.getItem('panier');
+    cartItems = JSON.parse(cartItems);
+    // console.log(cartItems);
+    // console.log(cartItems.NorbertTan);
 
-// Bouton Supprimer
-// for (let i = 0; i < tabRecJson.length; i++) {
-//     let btnSup = document.querySelectorAll('.supprime');
-//     btnSup[i].addEventListener('click', function(e) {
-//         console.log(i);
-//         var btnclick = e.target;
-//         btnclick.parentElement.remove();
-//         tabRecJson.splice(i, 1);
-//         totalCost = totalCost - (tabRecJson[i].prix);
-//         localStorage.setItem("CoutTotal", totalCost);
+    for(let i=0; i < deleteBtn.length; i++) {
+        deleteBtn[i].addEventListener('click', () => {
+            productName = deleteBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            
+            productColor = deleteBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            
+            let prod = productName + productColor;
+            console.log(cartItems[prod].nom);
+            localStorage.setItem('quantity', productNb - cartItems[prod].qte);
+            localStorage.setItem('prixTotal', prixTotal - (cartItems[prod].qte * cartItems[prod].prix));
+
+            delete cartItems[prod];
+            localStorage.setItem('panier', JSON.stringify(cartItems));
+
+            // cartDisplay();
+            document.location.reload();
+        });
+    }
+};
+
+function quantityBtn() {
+    let decreaseBtn = document.querySelectorAll('.decBtn');
+    let increaseBtn = document.querySelectorAll('.incBtn');
+    let currentQty;
+    let productName;
+    let productColor;
+
+    let cartItems = localStorage.getItem('panier');
+    cartItems = JSON.parse(cartItems);
+    let productNb = localStorage.getItem('quantity');
+    productNb = parseInt(productNb);
+    let prixTotal = localStorage.getItem('prixTotal');
+    prixTotal = parseInt(prixTotal);
+
+    for(let i=0; i < decreaseBtn.length; i++) {
+        decreaseBtn[i].addEventListener('click', () => {
+            currentQty = decreaseBtn[i].parentElement.querySelector('.qte').textContent;
+            productName = decreaseBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            
+            productColor = decreaseBtn[i].previousElementSibling.previousElementSibling.textContent;
+
+            let prod = productName + productColor;
+            if(cartItems[prod].qte > 1) {
+                cartItems[prod].qte -= 1;
+                localStorage.setItem('panier', JSON.stringify(cartItems));
+                localStorage.setItem('quantity', productNb -1);
+                localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[prod].prix));
+                document.location.reload();
+            }
+            
+
+        });
+    };
+
+    for(let i=0; i < increaseBtn.length; i++) {
+        increaseBtn[i].addEventListener('click', () => {
+            currentQty = increaseBtn[i].parentElement.querySelector('.qte').textContent;
+            productName = increaseBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            
+            productColor = increaseBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+
+            let prod = productName + productColor;
+
+            cartItems[prod].qte += 1;
+            localStorage.setItem('panier', JSON.stringify(cartItems));
+            localStorage.setItem('quantity', productNb + 1);
+            localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[prod].prix));
+            document.location.reload();
+        });
+    };
+
+};
+
+cartDisplay();
+
+
+// let tabRec = localStorage.getItem("panier");
+// tabRec = JSON.parse(tabRec);
+// console.log(tabRec);
+// let qteRec = localStorage.getItem("quantity");
+// qteRec = parseInt(qteRec);
+
+// // Sous-total
+// let totalCost = localStorage.getItem('prixTotal');
+// totalCost = parseInt(totalCost);
+// let div = document.createElement("div");
+// let htmlDiv = `<div class="sTotalPrix">${totalCost} €</div>`;
+// div.innerHTML = htmlDiv;
+// document.getElementsByClassName('sTotal')[0].appendChild(div);
+
+// for (let i = 0; i < tabRec.length; i++) {
+//     let tr = document.createElement("tr");
+//     let htmlTr = `<tr><td class = "tName">${tabRec[i].nom}</td><td class = "tColor">${tabRec[i].couleur}</td><td>${tabRec[i].prix} €</td><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="qte">${tabRec[i].qte}</p><ion-icon name="caret-forward-outline" class="incBtn"></ion-icon></tr><td class="price">${tabRec[i].prix * tabRec[i].qte} €</td><td class="supprime">Supprimer</td>`;
+//     tr.innerHTML = htmlTr;
+//     document.getElementById('table__body').appendChild(tr);
+
+//     let qteString = document.querySelectorAll('.qte');
+//     let qte = parseInt(qteString[i].textContent, 10);
+
+//     // Flèche Augmenter quantité
+//     let price = document.querySelectorAll('.price');
+//     let incBtn = document.querySelectorAll('.incBtn');
+//     incBtn[i].addEventListener('click', function() {
+//         let totalCost = localStorage.getItem('prixTotal');
+//         totalCost = parseInt(totalCost);
+//         qte++;
+//         qteRec++;
+//         qteString[i].innerHTML = qte;
+//         price[i].innerHTML = `${tabRec[0].prix * qte} €`;
+//         tabRec[i].qte +=1;
+//         totalCost = totalCost + (tabRec[i].prix);
+//         localStorage.setItem("prixTotal", totalCost);
+//         localStorage.setItem("quantity", qteRec);
 //         document.getElementsByClassName('sTotalPrix')[0].innerHTML = totalCost + ' €';
-//         localStorage.setItem("TabStore", JSON.stringify(tabRecJson));
-//         console.log("test", tabRecJson[i]);
+        
+//         localStorage.setItem("panier", JSON.stringify(tabRec));
+        
 //     });
 
+
+//     // Flèche Baisser quantité
+//     let decBtn = document.querySelectorAll('.decBtn');
+//     decBtn[i].addEventListener('click', function() {
+//         let totalCost = localStorage.getItem('prixTotal');
+//         totalCost = parseInt(totalCost);
+//         qte--;
+//         qteRec--;
+//         if (qte < 1) {
+//             qte = 1;
+//         }else {        
+//             qteString[i].innerHTML = qte;
+//             price[i].innerHTML = `${tabRec[i].prix * qte} €`;
+//             tabRec[i].qte -=1;
+//             totalCost = totalCost - (tabRec[i].prix);
+//             localStorage.setItem("prixTotal", totalCost);
+//             localStorage.setItem("quantity", qteRec);
+//             document.getElementsByClassName('sTotalPrix')[0].innerHTML = totalCost + ' €';
+//             localStorage.setItem("panier", JSON.stringify(tabRec));
+//         };        
+//     });
+
+
+//     // Bouton Supprimer
+//     let btnSup = document.querySelectorAll('.supprime');
+//     btnSup[i].addEventListener('click', function(e) {
+//         var btnclick = e.target;
+//         btnclick.parentElement.remove();
+//         tabRec.splice(i, 1);
+//         // document.getElementById('table__body').removeChild(tr);
+//         // totalCost = totalCost - (tabRec[i].prix);
+//         totalCost = totalCost - (tabRec[i].prix * tabRec[i].qte);
+//         localStorage.setItem("prixTotal", totalCost);
+//         document.getElementsByClassName('sTotalPrix')[0].innerHTML = totalCost + ' €';
+//         localStorage.setItem("panier", JSON.stringify(tabRec));
+//         document.location.reload();
+//     });
+    
 // };
+
+// function onLoadQuantity() {
+//     let qty = localStorage.getItem('quantity');
+
+//     if (qty) {
+//         document.getElementById('cart-items').textContent = qty;
+//     }
+// };
+
+// onLoadQuantity();
 
 
 // Formulaire

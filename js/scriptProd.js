@@ -2,121 +2,174 @@ let idRecup = location.search;
 let idReelle = idRecup.substring(4);
 // console.log(idReelle);
 
-let cartCount = localStorage.getItem("Quantité");
-let cartItemsString = document.getElementById('cart-items');
-if (cartCount == undefined) {
-    cartItemsString.innerHTML = 0;
-}else {
-    cartItemsString.innerHTML = cartCount;
-}
-
 fetch("http://localhost:3000/api/teddies/" + idReelle)
     .then(function (response) {
         response.json()
             .then(function (value) {
                 showTeddy(value);
-                // console.log(value);
+                // console.log("value : ", value);
                 let obj = JSON.stringify(value);
-                // console.log(obj);
+                // console.log("obj : ", obj);
         })            
     }).catch((err) => console.log('ERREUR : ', err));
     
-    let tabVide = [];
+let tabVide = [];
 
-    // Vérification de localStorage et initialisation de son contenu
-    let verifLocalStore = localStorage.getItem("TabStore");
-    if (verifLocalStore == undefined) {
-        console.log("LocalStorage vide");
-    } else {
-        console.log("localStorage existant", verifLocalStore);
-        let tabParse = JSON.parse(verifLocalStore);
-        // console.log("tabParse", tabParse);
-        // console.log(tabParse[0].nom);
-        
-        for (let i=0; i < tabParse.length; i++) {
-            tabVide.push(tabParse[i]);
-            // console.log("Ajout du localStorage dans le tableau ", tabVide);
+
+
+function showTeddy(product) {
+    // console.log("produit sélectionné : ", product);
+    document.getElementById("name").innerHTML += product.name;
+    document.getElementById("description").innerHTML += product.description;
+    document.getElementById("price").innerHTML += product.price/100;
+    
+    let im = document.getElementById("image");
+    let imUrl = product.imageUrl;
+    im.src = imUrl;
+
+    let color = document.getElementById('couleur');
+    // console.log("Le select est", color);
+
+    // Boucle pour ajouter les options à la balise select avec le tableau "product"
+    for (let i=0; i < product.colors.length; i++) {
+        color[i] = new Option(product.colors[i], product.colors[i]);
+    }
+
+    let tabId = localStorage.getItem('TabId');
+    tabId = JSON.parse(tabId);
+
+
+    let btnValid = document.getElementById('btnValid');
+    btnValid.addEventListener('click', () => {
+        quantity();
+    });
+
+    function onLoadQuantity() {
+        let qty = localStorage.getItem('quantity');
+
+        if (qty) {
+            document.getElementById('cart-items').textContent = qty;
         }
     }
 
-    function showTeddy(tab) {
-        // console.log(tab);
-        document.getElementById("name").innerHTML += tab.name;
-        document.getElementById("description").innerHTML += tab.description;
-        document.getElementById("price").innerHTML += tab.price/100;
-        
-        let im = document.getElementById("image");
-        let imUrl = tab.imageUrl;
-        im.src = imUrl;
+function quantity(prod) {
+    let colorTeddy = color.options[color.selectedIndex].text;
+    // console.log(colorTeddy);
+    
+    let qty = localStorage.getItem('quantity');
+    qty = parseInt(qty);
 
-        let color = document.getElementById('couleur');
-        // console.log("Le select est", color);
+    if (qty) {
+        localStorage.setItem('quantity', qty + 1);
+        document.getElementById('cart-items').textContent = qty + 1;
+    }else {
+        localStorage.setItem('quantity', 1);
+        document.getElementById('cart-items').textContent = 1;
+    };
 
-        // Boucle pour ajouter les options à la balise select avec le tableau "tab"
-        for (let i=0; i < tab.colors.length; i++) {
-            color[i] = new Option(tab.colors[i], tab.colors[i]);
-        }
+    // Récupération des données dans un tableau
+    let tabRecap = {
+        nom: product.name,
+        tag: product.name + colorTeddy,
+        description: product.description,
+        prix: product.price/100,
+        id: product._id,
+        couleur: colorTeddy,
+        qte: 0
+    }
+    // let tabRecap = {
+    //     [produit.nom + produit.couleur]: produit
+    // };
 
-        let tabId = localStorage.getItem('TabId');
-        tabId = JSON.parse(tabId);
+    // console.log("Produit sélectionné", tabRecap);
 
-        // Ajouter un produit
-        let btnValid = document.getElementById('btnValid');
-        btnValid.addEventListener('click', function() {
-            let aff = color.options[color.selectedIndex].text;
-            // console.log(aff);
+    setItems(tabRecap);
+    totalCost(tabRecap);
+};
 
-            // Récupération des données dans un tableau
-            let tabRecap = {
-                nom: tab.name,
-                description: tab.description,
-                prix: tab.price/100,
-                id: tab._id,
-                couleur: aff,
-                qte: 0
-            };
-            console.log("Tableau page actuelle", tabRecap);
+function setItems(tabRecap) {
+    let cartItems = localStorage.getItem('panier');
+    cartItems = JSON.parse(cartItems);
+    
+    if(cartItems != null) {
 
-            tabRecap.qte++;
-
-            // Vérification de la présence du produit dans le panier
-            if (tabId == undefined) {
-                tabId = [];
-                tabId.push(tabRecap.nom + tabRecap.couleur, tabRecap.qte);
-                console.log("Nom produit :", tabId);
-            } else if (tabId.find(elt => elt === tabRecap.nom + tabRecap.couleur)) {
-                alert("Ce produit est déjà présent dans le panier");
-                return
-            }else {
-                tabId.push(tabRecap.nom + tabRecap.couleur, tabRecap.qte);
-                console.log("Noms produits :", tabId);
-            };
-
-            tabVide.push(tabRecap);
-
-            let cartCost = localStorage.getItem('CoutTotal');
-            
-            // Ajout du total commandé au localStorage
-            if(cartCost != null) {
-                cartCost = parseInt(cartCost);
-                localStorage.setItem('CoutTotal', cartCost + (tab.price/100));
-            } else {
-                localStorage.setItem('CoutTotal', tab.price/100);
+        if(cartItems[tabRecap.tag] == undefined) {
+            cartItems = {
+                ...cartItems,
+                [tabRecap.tag]: tabRecap
             }
-            
-            
-            let tabRecJson = JSON.stringify(tabVide);
-            // console.log("tabJson", tabRecJson);
-            localStorage.setItem("TabStore", tabRecJson);
-            let tabIdJson = JSON.stringify(tabId);
-            // console.log(tabIdJson);
-            localStorage.setItem("TabId", tabIdJson);
-
-            
-            cartCount++;
-            cartItemsString.innerHTML = cartCount;
-            localStorage.setItem("Quantité", cartCount);
-            
-        })
+        }
+        cartItems[tabRecap.tag].qte += 1;
+    } else {
+        tabRecap.qte = 1;
+        cartItems = {
+            [tabRecap.tag]: tabRecap
+        }
     }
+    
+    localStorage.setItem('panier', JSON.stringify(cartItems));
+};
+
+function totalCost(tabRecap) {
+    let cartCost = localStorage.getItem('prixTotal');
+    console.log("Prix total", cartCost);
+
+    if(cartCost != null) {
+        cartCost = parseInt(cartCost);
+        localStorage.setItem('prixTotal', cartCost + tabRecap.prix);
+    }else {
+        localStorage.setItem('prixTotal', tabRecap.prix);
+    }
+};
+
+
+    // // Ajouter un produit
+    // let btnValid = document.getElementById('btnValid');
+    // btnValid.addEventListener('click', function() {
+    //     let aff = color.options[color.selectedIndex].text;
+    //     // console.log(aff);
+
+    //     // Récupération des données dans un tableau
+    //     let tabRecap = {
+    //         nom: product.name,
+    //         description: product.description,
+    //         prix: product.price/100,
+    //         id: product._id,
+    //         couleur: aff,
+    //         qte: 0
+    //     };
+    //     console.log("Tableau page actuelle", tabRecap);
+
+    //     tabRecap.qte++;
+
+    //     let cartCost = localStorage.getItem('CoutTotal');
+        
+    //     // Ajout du total commandé au localStorage
+    //     if(cartCost != null) {
+    //         cartCost = parseInt(cartCost);
+    //         localStorage.setItem('CoutTotal', cartCost + (product.price/100));
+    //     } else {
+    //         localStorage.setItem('CoutTotal', product.price/100);
+    //     }
+        
+        
+    //     let tabRecJson = JSON.stringify(tabVide);
+    //     // console.log("tabJson", tabRecJson);
+    //     localStorage.setItem("TabStore", tabRecJson);
+    //     let tabIdJson = JSON.stringify(tabId);
+    //     // console.log(tabIdJson);
+    //     localStorage.setItem("TabId", tabIdJson);
+
+        
+    //     cartCount++;
+    //     cartItemsString.innerHTML = cartCount;
+    //     localStorage.setItem("Quantité", cartCount);
+        
+    // })
+    onLoadQuantity();
+};
+
+
+
+
 
