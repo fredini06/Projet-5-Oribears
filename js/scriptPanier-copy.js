@@ -16,22 +16,17 @@ function cartDisplay() {
             let div = document.querySelector('.sTotal');
             div.innerHTML = `<p>Sous-total</p><span class="sTotalPrix">${totalCost} €</span>`;
 
-            // // Test
-            // let prod = document.querySelector('.products');
-            // prod.innerHTML = `
-            // <div class="cont"><div class="produit">${item.nom}</div><div class="col">${item.couleur}</div></div><div class="produit-prix">${item.prix} €</div><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="produit-qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="incBtn2"></ion-icon>
-            // <div class="produit-tot">${item.prix * item.qte} €</div>
-            // <div class="sup">Supprimer</div>
-            // `;
         }); 
     };
 
     deleteBtn()
+    quantityBtn()
 };
 
 function deleteBtn() {
     let deleteBtn = document.querySelectorAll('.supprime');
     let productName;
+    let productColor;
     let productNb = localStorage.getItem('quantity');
     let prixTotal = localStorage.getItem('prixTotal')
     let cartItems = localStorage.getItem('panier');
@@ -57,6 +52,59 @@ function deleteBtn() {
             document.location.reload();
         });
     }
+};
+
+function quantityBtn() {
+    let decreaseBtn = document.querySelectorAll('.decBtn');
+    let increaseBtn = document.querySelectorAll('.incBtn');
+    let currentQty;
+    let productName;
+    let productColor;
+
+    let cartItems = localStorage.getItem('panier');
+    cartItems = JSON.parse(cartItems);
+    let productNb = localStorage.getItem('quantity');
+    productNb = parseInt(productNb);
+    let prixTotal = localStorage.getItem('prixTotal');
+    prixTotal = parseInt(prixTotal);
+
+    for(let i=0; i < decreaseBtn.length; i++) {
+        decreaseBtn[i].addEventListener('click', () => {
+            currentQty = decreaseBtn[i].parentElement.querySelector('.qte').textContent;
+            productName = decreaseBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            
+            productColor = decreaseBtn[i].previousElementSibling.previousElementSibling.textContent;
+
+            let prod = productName + productColor;
+            if(cartItems[prod].qte > 1) {
+                cartItems[prod].qte -= 1;
+                localStorage.setItem('panier', JSON.stringify(cartItems));
+                localStorage.setItem('quantity', productNb -1);
+                localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[prod].prix));
+                document.location.reload();
+            }
+            
+
+        });
+    };
+
+    for(let i=0; i < increaseBtn.length; i++) {
+        increaseBtn[i].addEventListener('click', () => {
+            currentQty = increaseBtn[i].parentElement.querySelector('.qte').textContent;
+            productName = increaseBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            
+            productColor = increaseBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+
+            let prod = productName + productColor;
+
+            cartItems[prod].qte += 1;
+            localStorage.setItem('panier', JSON.stringify(cartItems));
+            localStorage.setItem('quantity', productNb + 1);
+            localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[prod].prix));
+            document.location.reload();
+        });
+    };
+
 };
 
 cartDisplay();
