@@ -8,18 +8,58 @@ function cartDisplay() {
         Object.values(cartItems).map(item => {
             let tr = document.createElement("tr");
             tr.innerHTML = `
-            <tr><td class = "tName">${item.nom}</td><td class = "tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="incBtn"></ion-icon></tr><td class="price">${item.prix * item.qte} €</td><td class="supprime">Supprimer</td>
+            <td class="tName">${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime">Supprimer</td>
             `;
             document.getElementById('table__body').appendChild(tr);
             
             // Sous-total
             let div = document.querySelector('.sTotal');
             div.innerHTML = `<p>Sous-total</p><span class="sTotalPrix">${totalCost} €</span>`;
+
+            // // Test
+            // let prod = document.querySelector('.products');
+            // prod.innerHTML = `
+            // <div class="cont"><div class="produit">${item.nom}</div><div class="col">${item.couleur}</div></div><div class="produit-prix">${item.prix} €</div><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="produit-qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="incBtn2"></ion-icon>
+            // <div class="produit-tot">${item.prix * item.qte} €</div>
+            // <div class="sup">Supprimer</div>
+            // `;
         }); 
+    };
+
+    deleteBtn()
+};
+
+function deleteBtn() {
+    let deleteBtn = document.querySelectorAll('.supprime');
+    let productName;
+    let productNb = localStorage.getItem('quantity');
+    let prixTotal = localStorage.getItem('prixTotal')
+    let cartItems = localStorage.getItem('panier');
+    cartItems = JSON.parse(cartItems);
+    // console.log(cartItems);
+    // console.log(cartItems.NorbertTan);
+
+    for(let i=0; i < deleteBtn.length; i++) {
+        deleteBtn[i].addEventListener('click', () => {
+            productName = deleteBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            
+            productColor = deleteBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            
+            let prod = productName + productColor;
+            console.log(cartItems[prod].nom);
+            localStorage.setItem('quantity', productNb - cartItems[prod].qte);
+            localStorage.setItem('prixTotal', prixTotal - (cartItems[prod].qte * cartItems[prod].prix));
+
+            delete cartItems[prod];
+            localStorage.setItem('panier', JSON.stringify(cartItems));
+
+            // cartDisplay();
+            document.location.reload();
+        });
     }
 };
 
-cartDisplay()
+cartDisplay();
 
 
 // let tabRec = localStorage.getItem("panier");

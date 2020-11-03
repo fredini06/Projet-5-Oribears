@@ -233,7 +233,7 @@ margin: 0 auto 25px;
     background-color: deepskyblue;
 }
 
-.qte{
+.qte, .produit-qte{
     display: inline-block;
     padding: 0 15px;
     margin: 10px;
@@ -269,11 +269,43 @@ margin: 0 auto 25px;
     font-size: 30px;
 }
 
+/* NEW */
+
+.products, .cont{
+    display: flex;
+}
+
+.produit, .col{
+    margin-right: 140px;
+}
+
+.produit-prix{
+    margin-right: 60px;
+}
+
+.incBtn2{
+    margin-right: 90px;
+}
+
+.produit-tot{
+    margin-right: 200px;
+}
+
+.sup{
+    font-size: 13px;
+}
+
+.sup:hover{
+    cursor: pointer;
+}
+
+
+/* FORMULAIRE */
+
 input:invalid {
     border: 2px dashed red;
-  }
+}
   
-  input:valid {
+input:valid {
     border: 3px solid deepskyblue;
-  }
-
+}
