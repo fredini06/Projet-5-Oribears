@@ -19,11 +19,11 @@ console.log();
 
 let adress = document.querySelector('.adress');
 adress.innerHTML += `
-<div class="coord"><div>${form[0].nom} ${form[0].prenom}</div><div>${form[0].adresse}</div><div>${form[0].zip} ${form[0].ville}</div></div>
+<div class="coord"><div>${form[0].nom} ${form[0].prenom}</div><div>${form[0].adresse}</div><div>${form[0].zip} ${form[0].ville}</div></div><hr>
 `;
 
 Object.values(cartItems).map(item => {
-    let valid = document.querySelector('.valid');
+    let valid = document.querySelector('.valid2');
     valid.innerHTML += `
     <div class="recapProd">${item.nom} - Couleur : ${item.couleur} - Prix : ${item.prix} € - Quantité : ${item.qte}</div>
     `;
@@ -33,6 +33,10 @@ let montTot = document.querySelector('.montTotal');
 montTot.innerHTML += `
 ${totalPrice} €
 `
+
+// **********Fetch*************
+
+
 
 // Empêcher le form d'être soumis
 
