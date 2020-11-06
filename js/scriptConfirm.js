@@ -36,10 +36,23 @@ ${totalPrice} €
 
 // **********Fetch*************
 
+let btn = document.querySelector('.btn_com');
+console.log(btn);
 
+btn.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-// Empêcher le form d'être soumis
-
-// form.addEventListener('submit', function(e) {
-//     e.preventDefault();
-//   });
+    fetch('http://localhost:3000/api/teddies/order', {
+        method: 'POST',
+        body: JSON.stringify(form, cartItems),
+        headers: {
+            'Content-type': 'application/json'
+          }
+    })
+    .then(function(response) {
+        return response.json()
+    })
+    .then(function(data) {
+        console.log("response", data);
+    })
+})
