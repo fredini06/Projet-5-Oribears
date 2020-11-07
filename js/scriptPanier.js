@@ -83,8 +83,6 @@ function quantityBtn() {
                 localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[prod].prix));
                 document.location.reload();
             }
-            
-
         });
     };
 
@@ -105,6 +103,11 @@ function quantityBtn() {
         });
     };
 
+};
+
+function generateId() {
+    let id = ((1 + Math.random()) * 58624).toString(16).substring(7);
+    localStorage.setItem('idCommande', id)
 };
 
 cartDisplay();
@@ -166,4 +169,5 @@ btn2.addEventListener('click', function() {
     formRecap.push(form);
     console.log(formRecap);
     localStorage.setItem('formulaire', JSON.stringify(formRecap));
+    generateId()
 });
