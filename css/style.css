@@ -205,7 +205,7 @@ margin: 0 auto 25px;
 }
 
 .formPanier__info--legend, .form__address--legend {
-    margin: 20px 75px 10px !important;
+    margin: 0 75px 10px !important;
     padding: 30px 0 0;
     font-size: 40px;
 }
