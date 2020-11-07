@@ -106,8 +106,8 @@ function quantityBtn() {
 };
 
 function generateId() {
-    let id = ((1 + Math.random()) * 58624).toString(16).substring(7);
-    localStorage.setItem('idCommande', id)
+    let id = {id_commande : ((1 + Math.random()) * 58624).toString(16).substring(7)};
+    localStorage.setItem('idCommande', JSON.stringify(id));
 };
 
 cartDisplay();

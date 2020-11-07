@@ -8,21 +8,24 @@ function onLoadQuantity() {
 
 onLoadQuantity();
 
-let form = localStorage.getItem('formulaire');
-form = JSON.parse(form);
-console.log(form);
-let cartItems = localStorage.getItem('panier');
-cartItems = JSON.parse(cartItems);
-console.log(cartItems);
+let contact = localStorage.getItem('formulaire');
+contact = JSON.parse(contact);
+console.log("Contact : ", contact);
+let products = localStorage.getItem('panier');
+products = JSON.parse(products);
+console.log ("Panier :", products);
 let totalPrice = localStorage.getItem('prixTotal');
 console.log();
+let order_id = localStorage.getItem('idCommande');
+order_id = JSON.parse(order_id);
+console.log("Id commande :", order_id);
 
 let adress = document.querySelector('.adress');
 adress.innerHTML += `
-<div class="coord"><div>${form[0].nom} ${form[0].prenom}</div><div>${form[0].adresse}</div><div>${form[0].zip} ${form[0].ville}</div></div><hr>
+<div class="coord"><div>${contact[0].nom} ${contact[0].prenom}</div><div>${contact[0].adresse}</div><div>${contact[0].zip} ${contact[0].ville}</div></div><hr>
 `;
 
-Object.values(cartItems).map(item => {
+Object.values(products).map(item => {
     let valid = document.querySelector('.valid2');
     valid.innerHTML += `
     <div class="recapProd">${item.nom} - Couleur : ${item.couleur} - Prix : ${item.prix} € - Quantité : ${item.qte}</div>
@@ -44,7 +47,7 @@ btn.addEventListener('submit', function(e) {
 
     fetch('http://localhost:3000/api/teddies/order', {
         method: 'POST',
-        body: JSON.stringify(form, cartItems),
+        body: JSON.stringify(contact, products, order_id),
         headers: {
             'Content-type': 'application/json'
           }
