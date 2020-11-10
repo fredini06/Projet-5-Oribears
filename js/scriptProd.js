@@ -16,14 +16,14 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
 let tabVide = [];
 
 
-
+// Affiche le produit sélectionné précedemment
 function showTeddy(product) {
     // console.log("produit sélectionné : ", product);
     document.getElementById("name").innerHTML += product.name;
     document.getElementById("description").innerHTML += product.description;
     document.getElementById("price").innerHTML += product.price/100;
     
-    let im = document.getElementById("image");
+    let im = document.getElementById("img");
     let imUrl = product.imageUrl;
     im.src = imUrl;
 
@@ -44,6 +44,7 @@ function showTeddy(product) {
         quantity();
     });
 
+    // Afficher le nombre de produits présents dans le panier
     function onLoadQuantity() {
         let qty = localStorage.getItem('quantity');
 
@@ -52,6 +53,8 @@ function showTeddy(product) {
         }
     }
 
+
+    // Mise à jour du nombre de produits sélectionnés dans le Local Storage
     function quantity(prod) {
         let colorTeddy = color.options[color.selectedIndex].text;
         // console.log(colorTeddy);
@@ -77,16 +80,13 @@ function showTeddy(product) {
             couleur: colorTeddy,
             qte: 0
         }
-        // let tabRecap = {
-        //     [produit.nom + produit.couleur]: produit
-        // };
-
-        // console.log("Produit sélectionné", tabRecap);
-
+ 
         setItems(tabRecap);
         totalCost(tabRecap);
     };
 
+
+    // Mise à jour des produits dans le panier
     function setItems(tabRecap) {
         let cartItems = localStorage.getItem('panier');
         cartItems = JSON.parse(cartItems);
@@ -110,6 +110,7 @@ function showTeddy(product) {
         localStorage.setItem('panier', JSON.stringify(cartItems));
     };
 
+    // Mise à jour du coût total dans le Local Storage
     function totalCost(tabRecap) {
         let cartCost = localStorage.getItem('prixTotal');
         console.log("Prix total", cartCost);

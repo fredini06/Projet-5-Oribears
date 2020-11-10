@@ -1,3 +1,4 @@
+// Afficher le nombre de produits présents dans le panier
 function onLoadQuantity() {
     let qty = localStorage.getItem('quantity');
 
@@ -20,11 +21,13 @@ let order_id = localStorage.getItem('idCommande');
 order_id = JSON.parse(order_id);
 console.log("Id commande :", order_id);
 
+// Afficher les données utilisateur
 let adress = document.querySelector('.adress');
 adress.innerHTML += `
 <div class="coord"><div>${contact[0].nom} ${contact[0].prenom}</div><div>${contact[0].adresse}</div><div>${contact[0].zip} ${contact[0].ville}</div></div><hr>
 `;
 
+// Récapitulatif des produits commandés
 Object.values(products).map(item => {
     let valid = document.querySelector('.valid2');
     valid.innerHTML += `

@@ -59,24 +59,18 @@ body{
     font-size: 60px;
 }
 
-.card__info{
-    margin : 0 auto;
-    width: 600px;
-    height: 600px;
+.card{
+    width: 70%;
+    margin : 0 auto 50px;
+    padding-bottom: 100px;
     color: #fff;
     font-size: 20px;
-}
-
-.card{
-    width: 700px;
-    height: 800px;
-    margin : 0 auto 100px;
     background-color: #343A40 !important;
-    box-shadow: 5px 5px 5px #000;
+    
 }
 
-#image{
-    margin : 50px auto;
+.img-fluid {
+    margin-bottom: 20px;
 }
 
 #price{
@@ -116,12 +110,9 @@ body{
 
 /* page produit */
 
-.card_prod{
-    width: 850px;
-    height: 930px;
-    margin : 0 auto;
-    background-color: #343A40 !important;
-    box-shadow: 5px 5px 5px #000;
+
+#img{
+    margin : 50px auto;
 }
 
 .form_prod{
@@ -149,7 +140,7 @@ select{
 
 .foot{
     height: 150px;
-    width: 100%;
+    width: 100% !important;
     background-color: #343A40;    
     text-align: center;
     position: absolute;
@@ -189,31 +180,35 @@ caption {
     margin-top: 75px;
 }
 
-.formPanier input{
+/* .formPanier input{
     display: block;
     margin: 0 auto 25px;
     padding: 8px;
     width: 80%;
-}
+} */
 
-.formPanier__info, .form__address {
+/* .formPanier__info, .form__address {
 background-color: #343A40;
 color: #fff;
 width: 70%;
 height: 650px;
 margin: 0 auto 25px;
-}
+} */
 
-.formPanier__info--legend, .form__address--legend {
+/* .formPanier__info--legend, .form__address--legend {
     margin: 0 75px 10px !important;
     padding: 30px 0 0;
     font-size: 40px;
-}
+} */
 
-.lab {
+/* .lab {
     display: block !important;
     margin: 20px 75px 10px !important;
     font-size: 30px;
+} */
+
+.lab {
+    font-weight: 700;
 }
 
 #card_btn2 {
@@ -244,8 +239,9 @@ margin: 0 auto 25px;
     justify-content: space-between;
     font-weight: bold;
     background-color: rgb(150, 148, 148);
-    width: 1120px;
+    width: 200px;
     padding-top: 10px;
+    margin: 0 auto;
 }
 
 .sTotal p{
@@ -253,7 +249,7 @@ margin: 0 auto 25px;
 }
 
 .sTotalPrix{
-    margin-right: 395px;
+    margin-right: 10px;
 }
 
 .supprime{
@@ -270,13 +266,13 @@ margin: 0 auto 25px;
 
 /* FORMULAIRE */
 
-input:invalid {
+/* input:invalid {
     border: 2px dashed red;
 }
   
 input:valid {
     border: 3px solid deepskyblue;
-}
+} */
 
 /* PAGE CONFIRMATION */
 
@@ -345,4 +341,60 @@ hr {
     background-color: #343A40;    
     text-align: center;
     position: fixed;
+}
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 768px) {
+    
+    .legend {
+        font-size: 3em;
+    }
+
+    .card__info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card_prod img{
+        width: 50%;
+        height: auto;
+        justify-content: left;
+    }
+
+    .card_prod p{
+        width: 40%;
+        word-wrap: break-word;
+        font-size: 0,8em;
+    }
+
+    #cart-items {
+        right: auto;
+        top: -6px;
+        font-size: 12px;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+    #card_btn {
+        width: 150px;
+    }
+
+    .row p {
+        font-size: 18px;
+    }
+
+    .btn{
+        font-size: 16px !important;
+    }
+
+    #couleur {
+        width: 80%;
+    }
+
+    .table__caption{
+        width: 50%;
+    }
+
 }

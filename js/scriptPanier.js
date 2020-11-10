@@ -1,3 +1,4 @@
+// Affichage des produits sélectionnés sur la page panier
 function cartDisplay() {
     let cartItems = localStorage.getItem('panier');
     cartItems = JSON.parse(cartItems);
@@ -14,7 +15,7 @@ function cartDisplay() {
             
             // Sous-total
             let div = document.querySelector('.sTotal');
-            div.innerHTML = `<p>Sous-total</p><span class="sTotalPrix">${totalCost} €</span>`;
+            div.innerHTML = `<p>Sous-total :</p><span class="sTotalPrix">${totalCost} €</span>`;
 
         }); 
     };
@@ -23,6 +24,7 @@ function cartDisplay() {
     quantityBtn()
 };
 
+// Effacer les produits du panier
 function deleteBtn() {
     let deleteBtn = document.querySelectorAll('.supprime');
     let productName;
@@ -54,6 +56,7 @@ function deleteBtn() {
     }
 };
 
+// Fonction qui permet d'augmenter ou de baisser la quantité des produits
 function quantityBtn() {
     let decreaseBtn = document.querySelectorAll('.decBtn');
     let increaseBtn = document.querySelectorAll('.incBtn');
@@ -105,6 +108,7 @@ function quantityBtn() {
 
 };
 
+// Génère un id de commande
 function generateId() {
     let id = {id_commande : ((1 + Math.random()) * 58624).toString(16).substring(7)};
     localStorage.setItem('idCommande', JSON.stringify(id));
@@ -127,8 +131,9 @@ const pays = document.getElementById('pays');
 
 let input = document.getElementsByTagName('input');
 let btn2 = document.getElementById('card_btn2');
-// console.log(btn2);
+console.log("bouton", btn2);
 
+// Initialise les données du formulaire et les enregistre dans local Storage
 let formStore = localStorage.getItem('formulaire');
 // console.log(formStore);
 if (formStore == null) {
@@ -154,7 +159,7 @@ if (formStore == null) {
     pays.value = formJson[0].pays;
 };
 
-
+// Enregistre les données et passe à la page de confirmation
 btn2.addEventListener('click', function() {
     let form = {
         nom: nom.value,
@@ -167,7 +172,7 @@ btn2.addEventListener('click', function() {
         pays: pays.value
     };
     formRecap.push(form);
-    console.log(formRecap);
+    console.log("form", formRecap);
     localStorage.setItem('formulaire', JSON.stringify(formRecap));
     generateId()
 });
