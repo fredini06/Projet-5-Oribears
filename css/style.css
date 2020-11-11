@@ -236,27 +236,20 @@ caption {
     font-size: 30px;
 }
 
-/* FORMULAIRE */
-
-/* input:invalid {
-    border: 2px dashed red;
-}
-  
-input:valid {
-    border: 3px solid deepskyblue;
-} */
 
 /* PAGE CONFIRMATION */
 
-.contain {
-    display: flex;
-    justify-content: space-evenly;
-}
+
 
 .adress, .valid, .montTotal {
     font-size: 25px;
     margin-bottom: 30px;
     font-weight: 700;
+    text-align: center;
+}
+
+.montTotal {
+    text-align: center;
 }
 
 .coord, .recapProd {
@@ -277,13 +270,21 @@ hr {
     border-radius: 8px;
 }
 
+.cadre {
+    text-align: center;
+    width: 75%;
+    margin: 0 auto;
+}
+
 .finalValid {
+    width: 65%;
     height: 200px;
+    margin: 50px auto 0;
 }
 
 .btn_com {
-    margin-top: 10px;
-    margin-left: 20px;
+    display: block;
+    margin: 0 auto;
     width: 200px;
     height: 50px;
     line-height: 40px;
@@ -291,7 +292,7 @@ hr {
     background-color: deepskyblue;
     cursor: pointer;
     text-align: center;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 700;
     box-shadow: 2px 2px 5px #000;
     transition: all .4s ease;
@@ -305,14 +306,6 @@ hr {
     height: 200px;
     background-color: #343A40;
     margin-top: 50px;
-}
-
-.footer {
-    height: 350px;
-    width: 100%;
-    background-color: #343A40;    
-    text-align: center;
-    position: fixed;
 }
 
 /* RESPONSIVE */
@@ -349,7 +342,7 @@ hr {
 }
 
 @media screen and (max-width: 500px) {
-    #card_btn {
+    #card_btn, .btn_com{
         width: 150px;
     }
 

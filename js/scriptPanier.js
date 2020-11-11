@@ -38,12 +38,11 @@ function deleteBtn() {
 
     for(let i=0; i < deleteBtn.length; i++) {
         deleteBtn[i].addEventListener('click', () => {
-            productName = deleteBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            productName = deleteBtn[i].parentElement.cells[0].textContent;
             
-            productColor = deleteBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            productColor = deleteBtn[i].parentElement.cells[1].textContent;
             
             let prod = productName + productColor;
-            console.log(cartItems[prod].nom);
             localStorage.setItem('quantity', productNb - cartItems[prod].qte);
             localStorage.setItem('prixTotal', prixTotal - (cartItems[prod].qte * cartItems[prod].prix));
 
@@ -74,9 +73,9 @@ function quantityBtn() {
     for(let i=0; i < decreaseBtn.length; i++) {
         decreaseBtn[i].addEventListener('click', () => {
             currentQty = decreaseBtn[i].parentElement.querySelector('.qte').textContent;
-            productName = decreaseBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            productName = decreaseBtn[i].parentElement.cells[0].textContent;
             
-            productColor = decreaseBtn[i].previousElementSibling.previousElementSibling.textContent;
+            productColor = decreaseBtn[i].parentElement.cells[1].textContent;
 
             let prod = productName + productColor;
             if(cartItems[prod].qte > 1) {
@@ -92,9 +91,9 @@ function quantityBtn() {
     for(let i=0; i < increaseBtn.length; i++) {
         increaseBtn[i].addEventListener('click', () => {
             currentQty = increaseBtn[i].parentElement.querySelector('.qte').textContent;
-            productName = increaseBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            productName = increaseBtn[i].parentElement.cells[0].textContent;
             
-            productColor = increaseBtn[i].previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.textContent;
+            productColor = increaseBtn[i].parentElement.cells[1].textContent;
 
             let prod = productName + productColor;
 
@@ -131,7 +130,7 @@ const pays = document.getElementById('pays');
 
 let input = document.getElementsByTagName('input');
 let btn2 = document.getElementById('card_btn2');
-console.log("bouton", btn2);
+// console.log("bouton", btn2);
 
 // Initialise les données du formulaire et les enregistre dans local Storage
 let formStore = localStorage.getItem('formulaire');
@@ -146,9 +145,9 @@ if (formStore == null) {
     ville.value = '';
     pays.value = '';
 }else {
-    console.log(formStore);
+    // console.log(formStore);
     let formJson = JSON.parse(formStore);
-    console.log(formJson);
+    // console.log(formJson);
     nom.value = formJson[0].nom;
     prenom.value = formJson[0].prenom;
     mail.value = formJson[0].mail;
@@ -172,7 +171,7 @@ btn2.addEventListener('click', function() {
         pays: pays.value
     };
     formRecap.push(form);
-    console.log("form", formRecap);
+    // console.log("form", formRecap);
     localStorage.setItem('formulaire', JSON.stringify(formRecap));
     generateId()
 });

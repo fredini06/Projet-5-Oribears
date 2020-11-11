@@ -24,14 +24,14 @@ console.log("Id commande :", order_id);
 // Afficher les données utilisateur
 let adress = document.querySelector('.adress');
 adress.innerHTML += `
-<div class="coord"><div>${contact[0].nom} ${contact[0].prenom}</div><div>${contact[0].adresse}</div><div>${contact[0].zip} ${contact[0].ville}</div></div><hr>
+<div class="coord"><div><strong>Nom : </strong>${contact[0].nom} <br><strong>Prénom : </strong>${contact[0].prenom}</div><div><strong>Adresse : </strong>${contact[0].adresse} - ${contact[0].zip} ${contact[0].ville}</div></div><hr>
 `;
 
 // Récapitulatif des produits commandés
 Object.values(products).map(item => {
     let valid = document.querySelector('.valid2');
     valid.innerHTML += `
-    <div class="recapProd">${item.nom} - Couleur : ${item.couleur} - Prix : ${item.prix} € - Quantité : ${item.qte}</div>
+    <div class="recapProd"><strong>${item.nom}</strong><br><i>Couleur</i> : ${item.couleur} - <i>Prix</i> : ${item.prix} € - <i>Quantité</i> : ${item.qte}</div>
     `;
 });
 
