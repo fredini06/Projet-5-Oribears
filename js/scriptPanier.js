@@ -4,14 +4,16 @@ function cartDisplay() {
     cartItems = JSON.parse(cartItems);
     let totalCost = localStorage.getItem('prixTotal');
     totalCost = parseInt(totalCost);
+    let prodContainer = document.querySelector("#table__body");
     
     if(cartItems) {
+        prodContainer.innerHTML = '';
         Object.values(cartItems).map(item => {
             let tr = document.createElement("tr");
             tr.innerHTML = `
             <td class="tName">${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime">Supprimer</td>
             `;
-            document.getElementById('table__body').appendChild(tr);
+            prodContainer.appendChild(tr);
             
             // Sous-total
             let div = document.querySelector('.sTotal');
@@ -49,8 +51,7 @@ function deleteBtn() {
             delete cartItems[prod];
             localStorage.setItem('panier', JSON.stringify(cartItems));
 
-            // cartDisplay();
-            document.location.reload();
+            cartDisplay();
         });
     }
 };
@@ -83,7 +84,8 @@ function quantityBtn() {
                 localStorage.setItem('panier', JSON.stringify(cartItems));
                 localStorage.setItem('quantity', productNb -1);
                 localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[prod].prix));
-                document.location.reload();
+                
+                cartDisplay();
             }
         });
     };
@@ -101,7 +103,8 @@ function quantityBtn() {
             localStorage.setItem('panier', JSON.stringify(cartItems));
             localStorage.setItem('quantity', productNb + 1);
             localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[prod].prix));
-            document.location.reload();
+            
+            cartDisplay();
         });
     };
 
