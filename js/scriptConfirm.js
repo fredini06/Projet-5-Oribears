@@ -13,6 +13,7 @@ let totalPrice = localStorage.getItem('prixTotal');
 console.log();
 let order_id = JSON.parse(localStorage.getItem('idCommande'));
 console.log("Id commande :", order_id);
+let quantity = localStorage.getItem('quantity');
 
 // Afficher l'id commande
 let adress = document.querySelector('.adress');
@@ -21,7 +22,7 @@ adress.innerHTML += `
 
 let montTot = document.querySelector('.montTotal');
 montTot.innerHTML += `
-${totalPrice} €
+${totalPrice} € <p>(${quantity} article(s))</p>
 `
 
 // **********Fetch*************
