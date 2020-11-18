@@ -1,12 +1,10 @@
 // Affichage des produits sélectionnés sur la page panier
 function cartDisplay() {
-    let cartItems = localStorage.getItem('panier');
-    cartItems = JSON.parse(cartItems);
+    let cartItems = JSON.parse(localStorage.getItem('panier'));
     let totalCost = localStorage.getItem('prixTotal');
-    totalCost = parseInt(totalCost);
     let prodContainer = document.querySelector("#table__body");
     
-    if(totalCost != 0) {
+    if(totalCost != null & totalCost != 0) {
         prodContainer.innerHTML = '';
         Object.values(cartItems).map(item => {
             let tr = document.createElement("tr");
@@ -44,8 +42,7 @@ function deleteBtn() {
     let productColor;
     let productNb = localStorage.getItem('quantity');
     let prixTotal = localStorage.getItem('prixTotal')
-    let cartItems = localStorage.getItem('panier');
-    cartItems = JSON.parse(cartItems);
+    let cartItems = JSON.parse(localStorage.getItem('panier'));
     // console.log(cartItems);
     // console.log(cartItems.NorbertTan);
 
@@ -75,12 +72,9 @@ function quantityBtn() {
     let productName;
     let productColor;
 
-    let cartItems = localStorage.getItem('panier');
-    cartItems = JSON.parse(cartItems);
-    let productNb = localStorage.getItem('quantity');
-    productNb = parseInt(productNb);
-    let prixTotal = localStorage.getItem('prixTotal');
-    prixTotal = parseInt(prixTotal);
+    let cartItems = JSON.parse(localStorage.getItem('panier'));
+    let productNb = parseInt(localStorage.getItem('quantity'));
+    let prixTotal = parseInt(localStorage.getItem('prixTotal'));
 
     for(let i=0; i < decreaseBtn.length; i++) {
         decreaseBtn[i].addEventListener('click', () => {

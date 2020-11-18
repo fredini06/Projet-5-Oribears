@@ -96,7 +96,7 @@ function showTeddy(product) {
             if(cartItems[tabRecap.tag] == undefined) {
                 cartItems = {
                     ...cartItems,
-                    [tabRecap.tag]: tabRecap
+                    [tabRecap.tag]: tabRecap            
                 }
             }
             cartItems[tabRecap.tag].qte += 1;
