@@ -6,7 +6,7 @@ function cartDisplay() {
     totalCost = parseInt(totalCost);
     let prodContainer = document.querySelector("#table__body");
     
-    if(cartItems) {
+    if(totalCost != 0) {
         prodContainer.innerHTML = '';
         Object.values(cartItems).map(item => {
             let tr = document.createElement("tr");
@@ -20,8 +20,19 @@ function cartDisplay() {
             div.innerHTML = `<p>Sous-total :</p><span class="sTotalPrix">${totalCost} €</span>`;
 
         }); 
+    } else {
+        document.querySelector('.legend').textContent = 'Panier vide';
+        document.querySelector('.container').innerHTML=`<div id="card_btn">
+        <p class="btn btn_prod" id="btnValid">Retour</p>
+    </div>`;
+
+        document.getElementById('card_btn').addEventListener('click', function() {
+            window.history.go(-1)
+        });
+    
     };
 
+    
     deleteBtn()
     quantityBtn()
 };
@@ -110,5 +121,5 @@ function quantityBtn() {
 
 };
 
-cartDisplay();
 
+cartDisplay();

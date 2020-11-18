@@ -8,11 +8,11 @@ const ville = document.getElementById('ville');
 const pays = document.getElementById('pays');
 
 let contact = JSON.parse(localStorage.getItem('formulaire'));
-console.log("Contact : ", contact);
+// console.log("Contact : ", contact);
 let products = JSON.parse(localStorage.getItem('panier'));
-console.log ("Panier :", products);
+// console.log ("Panier :", products);
 let order_id = JSON.parse(localStorage.getItem('idCommande'));
-console.log("Id commande :", order_id);
+// console.log("Id commande :", order_id);
 
 let formRecap = [];
 
@@ -52,27 +52,8 @@ if (formStore == null) {
     pays.value = formJson[0].pays;
 };
 
-// Envoie les données au serveur et passe à la page confirmation
-btn2.addEventListener('click', function(e) {
-
-    // e.preventDefault();
-
-    fetch('http://localhost:3000/api/teddies/order', {
-        method: 'POST',
-        body: JSON.stringify(contact, products, order_id),
-        headers: {
-            'Content-type': 'application/json'
-            }
-    })
-    .then(function(response) {
-        return response.json()
-    })
-    .then(function(data) {
-        formulaire(data);
-    })
-});
-
-function formulaire() {
+// Enregistre les données du formulaire
+btn2.addEventListener('click', function() {
     let form = {
         nom: nom.value,
         prenom: prenom.value,
@@ -86,6 +67,31 @@ function formulaire() {
     formRecap.push(form);
     // console.log("form", formRecap);
     localStorage.setItem('formulaire', JSON.stringify(formRecap));
-};
+})
 
-generateId()
+document.getElementById('formOrder').addEventListener('submit', function(e){
+    e.preventDefault();
+    sendData();
+})
+
+// Envoie les données au serveur
+function sendData() {
+        
+    fetch('http://localhost:3000/api/teddies/order', {
+        method: 'POST',
+        body: JSON.stringify(contact, products, order_id),
+        headers: {
+            'Content-type': 'application/json'
+            }
+    })
+    .then(function(response) {
+        return response.json()
+    })
+    .then(function(data) {
+        console.log(data);
+    });
+
+    window.location.href="confirm.html";
+}
+
+generateId();

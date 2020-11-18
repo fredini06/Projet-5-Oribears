@@ -17,13 +17,10 @@ let quantity = localStorage.getItem('quantity');
 
 // Afficher l'id commande
 let adress = document.querySelector('.adress');
-adress.innerHTML += `
-<div class="finalValid">Identifiant de commande : ${order_id.id_commande}</div>`;
+adress.innerHTML += `<div class="finalValid">Identifiant de commande : ${order_id.id_commande}</div>`;
 
 let montTot = document.querySelector('.montTotal');
-montTot.innerHTML += `
-${totalPrice} € <p>(${quantity} article(s))</p>
-`
+montTot.innerHTML += `${totalPrice} € <p>(${quantity} article(s))</p>`;
 
 // **********Fetch*************
 
