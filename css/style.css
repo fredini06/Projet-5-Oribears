@@ -54,7 +54,7 @@ body{
 /* Navbar ends */
 
 .legend{
-    margin: 150px auto 50px;
+    margin: 250px auto 50px;
     text-align: center;
     font-size: 60px;
 }
@@ -213,7 +213,7 @@ caption {
     background-color: rgb(150, 148, 148);
     width: 200px;
     padding-top: 10px;
-    margin: 0 auto;
+    margin: 0 auto 50px;
 }
 
 .sTotal p{
@@ -222,6 +222,17 @@ caption {
 
 .sTotalPrix{
     margin-right: 10px;
+}
+
+.videpanier {
+    display: block;
+    margin: 0 auto 50px;
+    text-align: center;
+    border-radius: 30px;
+}
+
+.videpanier:hover{
+    background-color: deepskyblue;
 }
 
 .supprime{
@@ -293,6 +304,10 @@ hr {
     height: 200px;
     background-color: #343A40;
     margin-top: 50px;
+}
+
+.tId {
+    display: none;
 }
 
 /* RESPONSIVE */

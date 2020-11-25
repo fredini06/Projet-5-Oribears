@@ -7,18 +7,16 @@ const zip = document.getElementById('zip');
 const ville = document.getElementById('ville');
 const pays = document.getElementById('pays');
 
+let productNb = localStorage.getItem('quantity');
+let totalCost = localStorage.getItem('prixTotal');
 let contact = JSON.parse(localStorage.getItem('formulaire'));
-// console.log("Contact : ", contact);
 let products = JSON.parse(localStorage.getItem('panier'));
-// console.log ("Panier :", products);
 let order_id = JSON.parse(localStorage.getItem('idCommande'));
-// console.log("Id commande :", order_id);
 
 let formRecap = [];
 
 let input = document.getElementsByTagName('input');
 let btn2 = document.getElementById('btn_com');
-// console.log("bouton", btn2);
 
 // Génère un id de commande
 function generateId() {
@@ -28,7 +26,6 @@ function generateId() {
 
 // Initialise les données du formulaire et les enregistre dans local Storage
 let formStore = localStorage.getItem('formulaire');
-// console.log(formStore);
 if (formStore == null) {
     nom.value = '';
     prenom.value = '';
@@ -39,9 +36,7 @@ if (formStore == null) {
     ville.value = '';
     pays.value = '';
 }else {
-    // console.log(formStore);
     let formJson = JSON.parse(formStore);
-    // console.log(formJson);
     nom.value = formJson[0].nom;
     prenom.value = formJson[0].prenom;
     mail.value = formJson[0].mail;
@@ -65,9 +60,17 @@ btn2.addEventListener('click', function() {
         pays: pays.value
     };
     formRecap.push(form);
-    // console.log("form", formRecap);
     localStorage.setItem('formulaire', JSON.stringify(formRecap));
-})
+    localStorage.setItem('prixCommande', totalCost);
+    localStorage.setItem('qtyCommande', productNb);
+    videpanier();
+});
+
+function videpanier() {
+    localStorage.removeItem('panier');
+    localStorage.removeItem('quantity');
+    localStorage.removeItem('prixTotal');
+};
 
 document.getElementById('formOrder').addEventListener('submit', function(e){
     e.preventDefault();

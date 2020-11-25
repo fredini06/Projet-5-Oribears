@@ -1,15 +1,12 @@
 let idRecup = location.search;
 let idReelle = idRecup.substring(4);
-// console.log(idReelle);
 
 fetch("http://localhost:3000/api/teddies/" + idReelle)
     .then(function (response) {
         response.json()
             .then(function (value) {
                 showTeddy(value);
-                // console.log("value : ", value);
                 let obj = JSON.stringify(value);
-                // console.log("obj : ", obj);
         })            
     }).catch((err) => console.log('ERREUR : ', err));
     
@@ -18,7 +15,6 @@ let tabVide = [];
 
 // Affiche le produit sélectionné précedemment
 function showTeddy(product) {
-    // console.log("produit sélectionné : ", product);
     document.getElementById("name").innerHTML += product.name;
     document.getElementById("description").innerHTML += product.description;
     document.getElementById("price").innerHTML += product.price/100;
@@ -28,7 +24,6 @@ function showTeddy(product) {
     im.src = imUrl;
 
     let color = document.getElementById('couleur');
-    // console.log("Le select est", color);
 
     // Boucle pour ajouter les options à la balise select avec le tableau "product"
     for (let i=0; i < product.colors.length; i++) {
@@ -53,9 +48,7 @@ function onLoadQuantity() {
 // Mise à jour du nombre de produits sélectionnés dans le Local Storage
 function quantity(product) {
     let color = document.getElementById('couleur');
-    // console.log("Le select est", color);
     let colorTeddy = color.options[color.selectedIndex].text;
-    // console.log(colorTeddy);
     
     let qty = localStorage.getItem('quantity');
     qty = parseInt(qty);
@@ -74,7 +67,7 @@ function quantity(product) {
         tag: product.name + colorTeddy,
         description: product.description,
         prix: product.price/100,
-        id: product._id,
+        id: product._id + colorTeddy,
         couleur: colorTeddy,
         qte: 0
     };
@@ -90,19 +83,19 @@ function setItems(tabRecap) {
     
     if(cartItems != null) {
 
-        if(cartItems[tabRecap.tag] == undefined) {
+        if(cartItems[tabRecap.id] == undefined) {
             cartItems = {
                 ...cartItems,
-                [tabRecap.tag]: tabRecap            
-            }
+                [tabRecap.id]: tabRecap            
+            };
         }
-        cartItems[tabRecap.tag].qte += 1;
+        cartItems[tabRecap.id].qte += 1;
     } else {
         tabRecap.qte = 1;
         cartItems = {
-            [tabRecap.tag]: tabRecap
-        }
-    }
+            [tabRecap.id]: tabRecap
+        };
+    };
     
     localStorage.setItem('panier', JSON.stringify(cartItems));
 };
@@ -110,7 +103,6 @@ function setItems(tabRecap) {
 // Mise à jour du coût total dans le Local Storage
 function totalCost(tabRecap) {
     let cartCost = localStorage.getItem('prixTotal');
-    console.log("Prix total", cartCost);
 
     if(cartCost != null) {
         cartCost = parseInt(cartCost);

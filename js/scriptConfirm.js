@@ -9,11 +9,10 @@ function onLoadQuantity() {
 
 onLoadQuantity();
 
-let totalPrice = localStorage.getItem('prixTotal');
-console.log();
+let totalPrice = localStorage.getItem('prixCommande');
 let order_id = JSON.parse(localStorage.getItem('idCommande'));
 console.log("Id commande :", order_id);
-let quantity = localStorage.getItem('quantity');
+let quantity = localStorage.getItem('qtyCommande');
 
 // Afficher l'id commande
 let adress = document.querySelector('.adress');
@@ -21,26 +20,3 @@ adress.innerHTML += `<div class="finalValid">Identifiant de commande : ${order_i
 
 let montTot = document.querySelector('.montTotal');
 montTot.innerHTML += `${totalPrice} € <p>(${quantity} article(s))</p>`;
-
-// **********Fetch*************
-
-// let btn = document.querySelector('.btn_com');
-// console.log(btn);
-
-// btn.addEventListener('submit', function(e) {
-//     e.preventDefault();
-
-//     fetch('http://localhost:3000/api/teddies/order', {
-//         method: 'POST',
-//         body: JSON.stringify(contact, products, order_id),
-//         headers: {
-//             'Content-type': 'application/json'
-//           }
-//     })
-//     .then(function(response) {
-//         return response.json()
-//     })
-//     .then(function(data) {
-//         console.log("response", data);
-//     })
-// })
