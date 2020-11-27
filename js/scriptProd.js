@@ -61,7 +61,7 @@ function quantity(product) {
         document.getElementById('cart-items').textContent = 1;
     };
 
-    // Récupération des données dans un tableau
+    // Récupération des données dans un objet
     let tabRecap = {
         nom: product.name,
         tag: product.name + colorTeddy,

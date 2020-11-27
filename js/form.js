@@ -86,13 +86,14 @@ function sendData() {
         headers: {
             'Content-type': 'application/json'
             }
-    })
-    .then(function(response) {
-        return response.json()
-    })
-    .then(function(data) {
-        console.log(data);
-    });
+        })
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(data) {
+            console.log(data);
+        })
+        .catch((err) => console.log('ERREUR : ', err));
 
     window.location.href="confirm.html";
 }

@@ -1,25 +1,41 @@
-// Affichage des produits sélectionnés sur la page panier
+// Affichage les produits sélectionnés sur la page panier ou panier vide
 function cartDisplay() {
+    let totalCost = localStorage.getItem('prixTotal');
+    
+    if(totalCost != null & totalCost != 0) {
+        itemDisplay(); 
+    } else {
+        emptyDisplay();    
+    };
+
+    deleteBtn()
+    quantityBtn()
+};
+
+
+// Affichage les produits sélectionnés sur la page panier
+function itemDisplay() {
     let cartItems = JSON.parse(localStorage.getItem('panier'));
     let totalCost = localStorage.getItem('prixTotal');
     let prodContainer = document.querySelector("#table__body");
     
-    if(totalCost != null & totalCost != 0) {
-        prodContainer.innerHTML = '';
-        Object.values(cartItems).map(item => {
-            let tr = document.createElement("tr");
-            tr.innerHTML = `
-            <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime">Supprimer</td><td class="tId">${item.id}</td>
-            `;
-            prodContainer.appendChild(tr);
-            
-            // Sous-total
-            let div = document.querySelector('.sTotal');
-            div.innerHTML = `<p>Sous-total :</p><span class="sTotalPrix">${totalCost} €</span>`;
+    prodContainer.innerHTML = '';
+    Object.values(cartItems).map(item => {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
+        <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime">Supprimer</td><td class="tId">${item.id}</td>
+        `;
+        prodContainer.appendChild(tr);
+        
+        // Sous-total
+        let div = document.querySelector('.sTotal');
+        div.innerHTML = `<p>Sous-total :</p><span class="sTotalPrix">${totalCost} €</span>`;
+    });
+};
 
-        }); 
-    } else {
-        document.querySelector('.legend').textContent = 'Panier vide';
+// Affiche le panier vide
+function emptyDisplay() {
+    document.querySelector('.legend').textContent = 'Panier vide';
         document.querySelector('.container').innerHTML=`<div id="card_btn">
         <p class="btn btn_prod" id="btnValid">Retour</p>
     </div>`;
@@ -27,12 +43,7 @@ function cartDisplay() {
         document.getElementById('card_btn').addEventListener('click', function() {
             window.history.go(-1)
         });
-    
-    };
-
-    deleteBtn()
-    quantityBtn()
-};
+}
 
 // Effacer les produits du panier
 function deleteBtn() {
