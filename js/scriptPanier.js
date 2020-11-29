@@ -24,7 +24,7 @@ function itemDisplay() {
     Object.values(cartItems).map(item => {
         let tr = document.createElement("tr");
         tr.innerHTML = `
-        <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime">Supprimer</td><td class="tId">${item.id}</td>
+        <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="btnQty decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="btnQty incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime">Supprimer</td><td class="tId">${item.id}</td>
         `;
         prodContainer.appendChild(tr);
         
@@ -109,11 +109,11 @@ function quantityBtn() {
 function qtyBtn() {
     let btnQty = document.querySelectorAll('.btnQty');
     for (let i=0; i < btnQty.length; i++) {
-        btnQty[i].addEventListener('click', () => {
-            if(btnQty[i].classList.contains('incBtn')) {
-                console.log('ok');
+        btnQty[i].addEventListener('click', ()=> {
+            if (btnQty[i].classList.contains('incBtn')) {
+                console.log('inc');
             }else {
-                console.log("pas ok");
+                console.log('dec');
             }
         })
     }
