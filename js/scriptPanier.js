@@ -104,13 +104,25 @@ function quantityBtn() {
 
 
 function qtyBtn() {
+    let cartItems = JSON.parse(localStorage.getItem('panier'));
+    let productNb = parseInt(localStorage.getItem('quantity'));
+    let prixTotal = parseInt(localStorage.getItem('prixTotal'));
     let btnQty = document.querySelectorAll('.btnQty');
     for (let i=0; i < btnQty.length; i++) {
+        let productId = Object.keys(cartItems)[i];
         btnQty[i].addEventListener('click', ()=> {
             if (btnQty[i].classList.contains('incBtn')) {
-                console.log('inc');
+
+                console.log('incBtn');
+
+                cartItems[productId].qte += 1;
+                localStorage.setItem('panier', JSON.stringify(cartItems));
+                localStorage.setItem('quantity', productNb + 1);
+                localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix));
+            
+            cartDisplay();
             }else {
-                console.log('dec');
+                console.log('decBtn');
             }
         })
     }
