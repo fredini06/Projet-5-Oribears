@@ -6,7 +6,6 @@ fetch("http://localhost:3000/api/teddies/" + idReelle)
         response.json()
             .then(function (value) {
                 showTeddy(value);
-                let obj = JSON.stringify(value);
         })            
     }).catch((err) => console.log('ERREUR : ', err));
     

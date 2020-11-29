@@ -10,6 +10,7 @@ function cartDisplay() {
 
     deleteBtn()
     quantityBtn()
+    // qtyBtn()
 };
 
 
@@ -23,7 +24,7 @@ function itemDisplay() {
     Object.values(cartItems).map(item => {
         let tr = document.createElement("tr");
         tr.innerHTML = `
-        <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime">Supprimer</td><td class="tId">${item.id}</td>
+        <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="btnQty decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="btnQty incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime" data-id = ${item.id}>Supprimer</td>
         `;
         prodContainer.appendChild(tr);
         
@@ -51,22 +52,20 @@ function deleteBtn() {
     let productNb = localStorage.getItem('quantity');
     let prixTotal = localStorage.getItem('prixTotal')
     let cartItems = JSON.parse(localStorage.getItem('panier'));
+    // console.log(Object.keys(cartItems)[1]);
 
     for(let i=0; i < deleteBtn.length; i++) {
-        deleteBtn[i].addEventListener('click', () => {
-
-            let productId = deleteBtn[i].parentElement.getElementsByClassName('tId')[0];
-            productId = productId.textContent;
-
-            localStorage.setItem('quantity', productNb - cartItems[productId].qte);
-            localStorage.setItem('prixTotal', prixTotal - (cartItems[productId].qte * cartItems[productId].prix));
-
-            delete cartItems[productId];
-            localStorage.setItem('panier', JSON.stringify(cartItems));
-
-            cartDisplay();
+        deleteBtn[i].addEventListener('click', ()=> {
+                let productId = Object.keys(cartItems)[i];
+                localStorage.setItem('quantity', productNb - cartItems[productId].qte);
+                localStorage.setItem('prixTotal', prixTotal - (cartItems[productId].qte * cartItems[productId].prix));
+    
+                delete cartItems[productId];
+                localStorage.setItem('panier', JSON.stringify(cartItems));
+    
+                cartDisplay();
         });
-    };
+    }; 
 };
 
 // Fonction qui permet d'augmenter ou de baisser la quantité des produits
@@ -78,8 +77,7 @@ function quantityBtn() {
     let prixTotal = parseInt(localStorage.getItem('prixTotal'));
 
     for(let i=0; i < decreaseBtn.length; i++) {
-        let productId = decreaseBtn[i].parentElement.getElementsByClassName('tId')[0];
-        productId = productId.textContent;
+        let productId = Object.keys(cartItems)[i];
         
         decreaseBtn[i].addEventListener('click', () => {
 
@@ -103,6 +101,7 @@ function quantityBtn() {
         })
     };
 };
+
 
 let btnVider = document.querySelector('.videpanier');
 
