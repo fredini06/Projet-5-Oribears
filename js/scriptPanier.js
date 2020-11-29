@@ -9,7 +9,8 @@ function cartDisplay() {
     };
 
     deleteBtn()
-    quantityBtn()
+    // quantityBtn()
+    qtyBtn()
 };
 
 
@@ -103,6 +104,21 @@ function quantityBtn() {
         })
     };
 };
+
+
+function qtyBtn() {
+    let btnQty = document.querySelectorAll('.btnQty');
+    for (let i=0; i < btnQty.length; i++) {
+        btnQty[i].addEventListener('click', () => {
+            if(btnQty[i].classList.contains('incBtn')) {
+                console.log('ok');
+            }else {
+                console.log("pas ok");
+            }
+        })
+    }
+}
+
 
 let btnVider = document.querySelector('.videpanier');
 
