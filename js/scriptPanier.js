@@ -9,7 +9,6 @@ function cartDisplay() {
     };
 
     deleteBtn()
-    // quantityBtn()
     qtyBtn()
 };
 
@@ -68,48 +67,12 @@ function deleteBtn() {
     }; 
 };
 
-// Fonction qui permet d'augmenter ou de baisser la quantité des produits
-function quantityBtn() {
-    let decreaseBtn = document.querySelectorAll('.decBtn');
-    let increaseBtn = document.querySelectorAll('.incBtn');
-    let cartItems = JSON.parse(localStorage.getItem('panier'));
-    let productNb = parseInt(localStorage.getItem('quantity'));
-    let prixTotal = parseInt(localStorage.getItem('prixTotal'));
-
-    for(let i=0; i < decreaseBtn.length; i++) {
-        let productId = Object.keys(cartItems)[i];
-        
-        decreaseBtn[i].addEventListener('click', () => {
-
-            if(cartItems[productId].qte > 1) {
-                cartItems[productId].qte -= 1;
-                localStorage.setItem('panier', JSON.stringify(cartItems));
-                localStorage.setItem('quantity', productNb -1);
-                localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[productId].prix));
-                
-                cartDisplay();
-            }
-        });
-
-        increaseBtn[i].addEventListener('click', () => {
-            cartItems[productId].qte += 1;
-            localStorage.setItem('panier', JSON.stringify(cartItems));
-            localStorage.setItem('quantity', productNb + 1);
-            localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix));
-            
-            cartDisplay();
-        })
-    };
-};
-
-
-
 function qtyBtn() {
     
     let cartItems = JSON.parse(localStorage.getItem('panier'));
-    let productNb = parseInt(localStorage.getItem('quantity'));git 
+    let productNb = parseInt(localStorage.getItem('quantity'));
     let prixTotal = parseInt(localStorage.getItem('prixTotal')); 
-    let container = document.querySelector('.container');
+    let container = document.querySelector('.cont');
     container.addEventListener('click', e => {
         let incBtn = e.target;
         let id = incBtn.dataset.id;
@@ -121,12 +84,14 @@ function qtyBtn() {
             
             cartDisplay();
         }else if (e.target.classList.contains('decBtn')) {
-            cartItems[id].qte -= 1;
-            localStorage.setItem('panier', JSON.stringify(cartItems));
-            localStorage.setItem('quantity', productNb -1);
-            localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[id].prix));
-                
-            cartDisplay();
+            if (cartItems[id].qte > 1){
+                cartItems[id].qte -= 1;
+                localStorage.setItem('panier', JSON.stringify(cartItems));
+                localStorage.setItem('quantity', productNb -1);
+                localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[id].prix));
+                    
+                cartDisplay();
+            }
         }
     })
 }
