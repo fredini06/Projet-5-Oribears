@@ -24,7 +24,7 @@ function itemDisplay() {
     Object.values(cartItems).map(item => {
         let tr = document.createElement("tr");
         tr.innerHTML = `
-        <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="btnQty decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="btnQty incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime" data-id = ${item.id}>Supprimer</td>
+        <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="btnQty decBtn" data-id = ${item.id}></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="btnQty incBtn" data-id = ${item.id}></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime" data-id = ${item.id}>Supprimer</td>
         `;
         prodContainer.appendChild(tr);
         
@@ -103,29 +103,75 @@ function quantityBtn() {
 };
 
 
+// function qtyBtn() {
+//     let cartItems = JSON.parse(localStorage.getItem('panier'));
+//     let productNb = parseInt(localStorage.getItem('quantity'));
+//     let prixTotal = parseInt(localStorage.getItem('prixTotal'));
+//     let btnQty = document.querySelectorAll('.btnQty');
+//     for (let i=0; i < btnQty.length; i++) {
+//         let productId = Object.keys(cartItems)[i];
+//         btnQty[i].addEventListener('click', ()=> {
+//             if (btnQty[i].classList.contains('incBtn')) {
+
+//                 console.log('incBtn');
+
+//                 cartItems[productId].qte += 1;
+//                 localStorage.setItem('panier', JSON.stringify(cartItems));
+//                 localStorage.setItem('quantity', productNb + 1);
+//                 localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix));
+            
+//             cartDisplay();
+//             }else {
+//                 console.log('decBtn');
+//             }
+//         })
+//     }
+// }
+
 function qtyBtn() {
+    
     let cartItems = JSON.parse(localStorage.getItem('panier'));
     let productNb = parseInt(localStorage.getItem('quantity'));
-    let prixTotal = parseInt(localStorage.getItem('prixTotal'));
-    let btnQty = document.querySelectorAll('.btnQty');
-    for (let i=0; i < btnQty.length; i++) {
-        let productId = Object.keys(cartItems)[i];
-        btnQty[i].addEventListener('click', ()=> {
-            if (btnQty[i].classList.contains('incBtn')) {
-
-                console.log('incBtn');
-
-                cartItems[productId].qte += 1;
-                localStorage.setItem('panier', JSON.stringify(cartItems));
-                localStorage.setItem('quantity', productNb + 1);
-                localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix));
+    let prixTotal = parseInt(localStorage.getItem('prixTotal')); 
+    let container = document.querySelector('.container');
+    container.addEventListener('click', e => {
+        let incBtn = e.target;
+        let id = incBtn.dataset.id;
+        if (e.target.classList.contains('incBtn')) {            
+            cartItems[id].qte += 1;
+            localStorage.setItem('panier', JSON.stringify(cartItems));
+            localStorage.setItem('quantity', productNb + 1);
+            localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[id].prix));
             
             cartDisplay();
-            }else {
-                console.log('decBtn');
-            }
-        })
-    }
+        }else if (e.target.classList.contains('decBtn')) {
+            cartItems[id].qte -= 1;
+            localStorage.setItem('panier', JSON.stringify(cartItems));
+            localStorage.setItem('quantity', productNb -1);
+            localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[id].prix));
+                
+            cartDisplay();
+        }
+    })
+
+    // for (let i=0; i < (btnQty.length)/2; i++) {
+    //     let productId = Object.keys(cartItems)[i];
+    //     btnQty[i].addEventListener('click', ()=> {
+    //         if (btnQty[i].classList.contains('incBtn')) {
+
+    //             console.log('incBtn');
+
+    //             cartItems[productId].qte += 1;
+    //             localStorage.setItem('panier', JSON.stringify(cartItems));
+    //             localStorage.setItem('quantity', productNb + 1);
+    //             localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix));
+            
+    //         cartDisplay();
+    //         }else {
+    //             console.log('decBtn');
+    //         }
+    //     })
+    // }
 }
 
 
