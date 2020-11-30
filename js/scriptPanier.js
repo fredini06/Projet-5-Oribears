@@ -8,7 +8,7 @@ function cartDisplay() {
         emptyDisplay();    
     };
 
-    deleteBtn()
+    // deleteBtn()
     qtyBtn()
 };
 
@@ -46,26 +46,26 @@ function emptyDisplay() {
 }
 
 // Effacer les produits du panier
-function deleteBtn() {
-    let deleteBtn = document.querySelectorAll('.supprime');
-    let productNb = localStorage.getItem('quantity');
-    let prixTotal = localStorage.getItem('prixTotal')
-    let cartItems = JSON.parse(localStorage.getItem('panier'));
-    // console.log(Object.keys(cartItems)[1]);
+// function deleteBtn() {
+//     let deleteBtn = document.querySelectorAll('.supprime');
+//     let productNb = localStorage.getItem('quantity');
+//     let prixTotal = localStorage.getItem('prixTotal')
+//     let cartItems = JSON.parse(localStorage.getItem('panier'));
+//     // console.log(Object.keys(cartItems)[1]);
 
-    for(let i=0; i < deleteBtn.length; i++) {
-        deleteBtn[i].addEventListener('click', ()=> {
-                let productId = Object.keys(cartItems)[i];
-                localStorage.setItem('quantity', productNb - cartItems[productId].qte);
-                localStorage.setItem('prixTotal', prixTotal - (cartItems[productId].qte * cartItems[productId].prix));
+//     for(let i=0; i < deleteBtn.length; i++) {
+//         deleteBtn[i].addEventListener('click', ()=> {
+//                 let productId = Object.keys(cartItems)[i];
+//                 localStorage.setItem('quantity', productNb - cartItems[productId].qte);
+//                 localStorage.setItem('prixTotal', prixTotal - (cartItems[productId].qte * cartItems[productId].prix));
     
-                delete cartItems[productId];
-                localStorage.setItem('panier', JSON.stringify(cartItems));
+//                 delete cartItems[productId];
+//                 localStorage.setItem('panier', JSON.stringify(cartItems));
     
-                cartDisplay();
-        });
-    }; 
-};
+//                 cartDisplay();
+//         });
+//     }; 
+// };
 
 function qtyBtn() {
     
@@ -76,6 +76,7 @@ function qtyBtn() {
     container.addEventListener('click', e => {
         let incBtn = e.target;
         let id = incBtn.dataset.id;
+        // Augmenter quantité
         if (e.target.classList.contains('incBtn')) {            
             cartItems[id].qte += 1;
             localStorage.setItem('panier', JSON.stringify(cartItems));
@@ -83,6 +84,7 @@ function qtyBtn() {
             localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[id].prix));
             
             cartDisplay();
+        // Baisser quantité
         }else if (e.target.classList.contains('decBtn')) {
             if (cartItems[id].qte > 1){
                 cartItems[id].qte -= 1;
@@ -92,6 +94,15 @@ function qtyBtn() {
                     
                 cartDisplay();
             }
+        //Supprimer produit
+        }else if (e.target.classList.contains('supprime')) {
+            localStorage.setItem('quantity', productNb - cartItems[id].qte);
+            localStorage.setItem('prixTotal', prixTotal - (cartItems[id].qte * cartItems[id].prix));
+
+            delete cartItems[id];
+            localStorage.setItem('panier', JSON.stringify(cartItems));
+
+            cartDisplay();
         }
     })
 }

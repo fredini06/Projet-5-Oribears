@@ -67,7 +67,7 @@ function quantity(product) {
         tag: product.name + colorTeddy,
         description: product.description,
         prix: product.price/100,
-        id: product._id + colorTeddy,
+        id: product._id + colorTeddy.replace(/ /g, ""),
         couleur: colorTeddy,
         qte: 0
     };
