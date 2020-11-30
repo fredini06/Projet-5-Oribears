@@ -102,10 +102,12 @@ function quantityBtn() {
     };
 };
 
+
+
 function qtyBtn() {
     
     let cartItems = JSON.parse(localStorage.getItem('panier'));
-    let productNb = parseInt(localStorage.getItem('quantity'));
+    let productNb = parseInt(localStorage.getItem('quantity'));git 
     let prixTotal = parseInt(localStorage.getItem('prixTotal')); 
     let container = document.querySelector('.container');
     container.addEventListener('click', e => {
