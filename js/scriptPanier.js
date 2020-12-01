@@ -76,39 +76,19 @@ function quantityBtn() {
     for(let i=0; i < btn.length; i++) {
         let productId = btn[i].dataset.id;
         btn[i].addEventListener('click', () => {
-            // if (btn[i].classList.contains('incBtn')) {
-            //     // cartItems[productId].qte += 1;
-            //     // localStorage.setItem('panier', JSON.stringify(cartItems));
-            //     localStorage.setItem('quantity', productNb + 1);
-            //     localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix));
-                
-            //     cartDisplay();
-            // }else {
-            //     if(cartItems[productId].qte > 1) {
-            //     // cartItems[productId].qte -= 1;
-            //     localStorage.setItem('panier', JSON.stringify(cartItems));
-            //     localStorage.setItem('quantity', productNb -1);
-            //     localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[productId].prix));
-                
-            //     cartDisplay();
-            //     }
-            // }
             let variant = (btn[i].classList.contains('incBtn') ? 1 : -1);
-            if(cartItems[productId].qte >= 1) {
-                cartItems[productId].qte += variant;
+            cartItems[productId].qte += variant;
+            localStorage.setItem('panier', JSON.stringify(cartItems));
+            localStorage.setItem('quantity', productNb + variant);
+            localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix) * variant);
+            if (cartItems[productId].qte === 0) {
+                delete cartItems[productId];
                 localStorage.setItem('panier', JSON.stringify(cartItems));
-                localStorage.setItem('quantity', productNb + variant);
-                if (variant === 1) {
-                    localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix));
-                }else {
-                    localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[productId].prix));
-                }
             }
             cartDisplay();
         })
     }
 };
-
 
 let btnVider = document.querySelector('.videpanier');
 
