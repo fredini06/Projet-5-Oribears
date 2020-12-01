@@ -7,6 +7,9 @@ function cartDisplay() {
     } else {
         itemDisplay();  
     };
+
+    deleteBtn()
+    quantityBtn()
 };
 
 
@@ -15,7 +18,6 @@ function itemDisplay() {
     let cartItems = JSON.parse(localStorage.getItem('panier'));
     let totalCost = localStorage.getItem('prixTotal');
     let prodContainer = document.querySelector(".table__body");
-    console.log(prodContainer);
     
     prodContainer.innerHTML = '';
     Object.values(cartItems).map(item => {
@@ -29,7 +31,7 @@ function itemDisplay() {
         let div = document.querySelector('.sTotal');
         div.innerHTML = `<p>Sous-total :</p><span class="sTotalPrix">${totalCost} €</span>`;
     });
-    qtyBtn()
+    // qtyBtn()
 };
 
 // Affiche le panier vide
@@ -45,66 +47,66 @@ function emptyDisplay() {
 }
 
 // Effacer les produits du panier
-// function deleteBtn() {
-//     let deleteBtn = document.querySelectorAll('.supprime');
-//     let productNb = localStorage.getItem('quantity');
-//     let prixTotal = localStorage.getItem('prixTotal')
-//     let cartItems = JSON.parse(localStorage.getItem('panier'));
-//     // console.log(Object.keys(cartItems)[1]);
+function deleteBtn() {
+    let deleteBtn = document.querySelectorAll('.supprime');
+    let productNb = localStorage.getItem('quantity');
+    let prixTotal = localStorage.getItem('prixTotal')
+    let cartItems = JSON.parse(localStorage.getItem('panier'));
 
-//     for(let i=0; i < deleteBtn.length; i++) {
-//         deleteBtn[i].addEventListener('click', ()=> {
-//                 let productId = Object.keys(cartItems)[i];
-//                 localStorage.setItem('quantity', productNb - cartItems[productId].qte);
-//                 localStorage.setItem('prixTotal', prixTotal - (cartItems[productId].qte * cartItems[productId].prix));
+    for(let i=0; i < deleteBtn.length; i++) {
+        deleteBtn[i].addEventListener('click', ()=> {
+                let productId = Object.keys(cartItems)[i];
+                localStorage.setItem('quantity', productNb - cartItems[productId].qte);
+                localStorage.setItem('prixTotal', prixTotal - (cartItems[productId].qte * cartItems[productId].prix));
     
-//                 delete cartItems[productId];
-//                 localStorage.setItem('panier', JSON.stringify(cartItems));
+                delete cartItems[productId];
+                localStorage.setItem('panier', JSON.stringify(cartItems));
     
-//                 cartDisplay();
-//         });
-//     }; 
-// };
+                cartDisplay();
+        });
+    }; 
+};
 
-function qtyBtn() {
-    
+function quantityBtn() {
+    let btn = document.querySelectorAll('.btnQty');
     let cartItems = JSON.parse(localStorage.getItem('panier'));
     let productNb = parseInt(localStorage.getItem('quantity'));
-    let prixTotal = parseInt(localStorage.getItem('prixTotal')); 
-    let container = document.querySelector('.cont');
-    container.addEventListener('click', e => {
-        let incBtn = e.target;
-        let id = incBtn.dataset.id;
-        // Augmenter quantité
-        if (e.target.classList.contains('incBtn')) {            
-            cartItems[id].qte += 1;
-            localStorage.setItem('panier', JSON.stringify(cartItems));
-            localStorage.setItem('quantity', productNb + 1);
-            localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[id].prix));
-            
-            cartDisplay();
-        // Baisser quantité
-        }else if (e.target.classList.contains('decBtn')) {
-            if (cartItems[id].qte > 1){
-                cartItems[id].qte -= 1;
+    let prixTotal = parseInt(localStorage.getItem('prixTotal'));
+
+    for(let i=0; i < btn.length; i++) {
+        let productId = btn[i].dataset.id;
+        btn[i].addEventListener('click', () => {
+            // if (btn[i].classList.contains('incBtn')) {
+            //     // cartItems[productId].qte += 1;
+            //     // localStorage.setItem('panier', JSON.stringify(cartItems));
+            //     localStorage.setItem('quantity', productNb + 1);
+            //     localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix));
+                
+            //     cartDisplay();
+            // }else {
+            //     if(cartItems[productId].qte > 1) {
+            //     // cartItems[productId].qte -= 1;
+            //     localStorage.setItem('panier', JSON.stringify(cartItems));
+            //     localStorage.setItem('quantity', productNb -1);
+            //     localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[productId].prix));
+                
+            //     cartDisplay();
+            //     }
+            // }
+            let variant = (btn[i].classList.contains('incBtn') ? 1 : -1);
+            if(cartItems[productId].qte >= 1) {
+                cartItems[productId].qte += variant;
                 localStorage.setItem('panier', JSON.stringify(cartItems));
-                localStorage.setItem('quantity', productNb -1);
-                localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[id].prix));
-                    
-                cartDisplay();
-            }
-        //Supprimer produit
-        }else if (e.target.classList.contains('supprime')) {
-            localStorage.setItem('quantity', productNb - cartItems[id].qte);
-            localStorage.setItem('prixTotal', prixTotal - (cartItems[id].qte * cartItems[id].prix));
-
-            delete cartItems[id];
-            localStorage.setItem('panier', JSON.stringify(cartItems));
-
+                localStorage.setItem('quantity', productNb + variant);
+                if (variant === 1) {
+                    localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix));
+                }else {
+                    localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[productId].prix));
+                }
             cartDisplay();
-        }
-    })
-}
+        })
+    }
+};
 
 
 let btnVider = document.querySelector('.videpanier');
@@ -115,9 +117,6 @@ btnVider.addEventListener('click', () => {
 });
 
 function videpanier() {
-    // localStorage.removeItem('panier');
-    // localStorage.removeItem('quantity');
-    // localStorage.removeItem('prixTotal');
     Storage.Clear()
 };
 
