@@ -103,6 +103,7 @@ function quantityBtn() {
                 }else {
                     localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[productId].prix));
                 }
+            }
             cartDisplay();
         })
     }
