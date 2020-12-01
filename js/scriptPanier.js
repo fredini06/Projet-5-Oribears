@@ -2,14 +2,11 @@
 function cartDisplay() {
     let totalCost = localStorage.getItem('prixTotal');
     
-    if(totalCost != null & totalCost != 0) {
-        itemDisplay(); 
+    if(totalCost == null || parseInt(totalCost) === 0) {
+        emptyDisplay(); 
     } else {
-        emptyDisplay();    
+        itemDisplay();  
     };
-
-    // deleteBtn()
-    qtyBtn()
 };
 
 
@@ -17,7 +14,8 @@ function cartDisplay() {
 function itemDisplay() {
     let cartItems = JSON.parse(localStorage.getItem('panier'));
     let totalCost = localStorage.getItem('prixTotal');
-    let prodContainer = document.querySelector("#table__body");
+    let prodContainer = document.querySelector(".table__body");
+    console.log(prodContainer);
     
     prodContainer.innerHTML = '';
     Object.values(cartItems).map(item => {
@@ -31,6 +29,7 @@ function itemDisplay() {
         let div = document.querySelector('.sTotal');
         div.innerHTML = `<p>Sous-total :</p><span class="sTotalPrix">${totalCost} €</span>`;
     });
+    qtyBtn()
 };
 
 // Affiche le panier vide
@@ -38,7 +37,7 @@ function emptyDisplay() {
     document.querySelector('.legend').textContent = 'Panier vide';
         document.querySelector('.container').innerHTML=`<div id="card_btn">
         <p class="btn btn_prod" id="btnValid">Retour</p>
-    </div>`;
+    </div><tbody class="table__body"></tbody>`;
 
         document.getElementById('card_btn').addEventListener('click', function() {
             window.history.go(-1)
@@ -116,9 +115,10 @@ btnVider.addEventListener('click', () => {
 });
 
 function videpanier() {
-    localStorage.removeItem('panier');
-    localStorage.removeItem('quantity');
-    localStorage.removeItem('prixTotal');
+    // localStorage.removeItem('panier');
+    // localStorage.removeItem('quantity');
+    // localStorage.removeItem('prixTotal');
+    Storage.Clear()
 };
 
 cartDisplay();
