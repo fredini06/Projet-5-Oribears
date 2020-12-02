@@ -63,13 +63,14 @@ btn2.addEventListener('click', function() {
     localStorage.setItem('formulaire', JSON.stringify(formRecap));
     localStorage.setItem('prixCommande', totalCost);
     localStorage.setItem('qtyCommande', productNb);
-    videpanier();
+    videpanier()
 });
 
 function videpanier() {
     localStorage.removeItem('panier');
-    localStorage.removeItem('quantity');
     localStorage.removeItem('prixTotal');
+    localStorage.removeItem('quantity');
+
 };
 
 document.getElementById('formOrder').addEventListener('submit', function(e){
