@@ -2,14 +2,14 @@
 function cartDisplay() {
     let totalCost = localStorage.getItem('prixTotal');
     
-    if(totalCost != null & totalCost != 0) {
-        itemDisplay(); 
+    if(totalCost == null || parseInt(totalCost) === 0) {
+        emptyDisplay(); 
     } else {
-        emptyDisplay();    
+        itemDisplay();  
     };
 
     deleteBtn()
-    qtyBtn()
+    quantityBtn()
 };
 
 
@@ -17,7 +17,7 @@ function cartDisplay() {
 function itemDisplay() {
     let cartItems = JSON.parse(localStorage.getItem('panier'));
     let totalCost = localStorage.getItem('prixTotal');
-    let prodContainer = document.querySelector("#table__body");
+    let prodContainer = document.querySelector(".table__body");
     
     prodContainer.innerHTML = '';
     Object.values(cartItems).map(item => {
@@ -31,6 +31,7 @@ function itemDisplay() {
         let div = document.querySelector('.sTotal');
         div.innerHTML = `<p>Sous-total :</p><span class="sTotalPrix">${totalCost} €</span>`;
     });
+    // qtyBtn()
 };
 
 // Affiche le panier vide
@@ -38,7 +39,7 @@ function emptyDisplay() {
     document.querySelector('.legend').textContent = 'Panier vide';
         document.querySelector('.container').innerHTML=`<div id="card_btn">
         <p class="btn btn_prod" id="btnValid">Retour</p>
-    </div>`;
+    </div><tbody class="table__body"></tbody>`;
 
         document.getElementById('card_btn').addEventListener('click', function() {
             window.history.go(-1)
@@ -51,7 +52,6 @@ function deleteBtn() {
     let productNb = localStorage.getItem('quantity');
     let prixTotal = localStorage.getItem('prixTotal')
     let cartItems = JSON.parse(localStorage.getItem('panier'));
-    // console.log(Object.keys(cartItems)[1]);
 
     for(let i=0; i < deleteBtn.length; i++) {
         deleteBtn[i].addEventListener('click', ()=> {
@@ -67,35 +67,28 @@ function deleteBtn() {
     }; 
 };
 
-function qtyBtn() {
-    
+function quantityBtn() {
+    let btn = document.querySelectorAll('.btnQty');
     let cartItems = JSON.parse(localStorage.getItem('panier'));
     let productNb = parseInt(localStorage.getItem('quantity'));
-    let prixTotal = parseInt(localStorage.getItem('prixTotal')); 
-    let container = document.querySelector('.cont');
-    container.addEventListener('click', e => {
-        let incBtn = e.target;
-        let id = incBtn.dataset.id;
-        if (e.target.classList.contains('incBtn')) {            
-            cartItems[id].qte += 1;
-            localStorage.setItem('panier', JSON.stringify(cartItems));
-            localStorage.setItem('quantity', productNb + 1);
-            localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[id].prix));
-            
-            cartDisplay();
-        }else if (e.target.classList.contains('decBtn')) {
-            if (cartItems[id].qte > 1){
-                cartItems[id].qte -= 1;
-                localStorage.setItem('panier', JSON.stringify(cartItems));
-                localStorage.setItem('quantity', productNb -1);
-                localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[id].prix));
-                    
-                cartDisplay();
-            }
-        }
-    })
-}
+    let prixTotal = parseInt(localStorage.getItem('prixTotal'));
 
+    for(let i=0; i < btn.length; i++) {
+        let productId = btn[i].dataset.id;
+        btn[i].addEventListener('click', () => {
+            let variant = (btn[i].classList.contains('incBtn') ? 1 : -1);
+            cartItems[productId].qte += variant;
+            localStorage.setItem('panier', JSON.stringify(cartItems));
+            localStorage.setItem('quantity', productNb + variant);
+            localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix) * variant);
+            if (cartItems[productId].qte === 0) {
+                delete cartItems[productId];
+                localStorage.setItem('panier', JSON.stringify(cartItems));
+            }
+            cartDisplay();
+        })
+    }
+};
 
 
 let btnVider = document.querySelector('.videpanier');
@@ -106,9 +99,7 @@ btnVider.addEventListener('click', () => {
 });
 
 function videpanier() {
-    localStorage.removeItem('panier');
-    localStorage.removeItem('quantity');
-    localStorage.removeItem('prixTotal');
+    Storage.Clear()
 };
 
 cartDisplay();
