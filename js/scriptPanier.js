@@ -9,12 +9,7 @@ function cartDisplay() {
     };
 
     deleteBtn()
-<<<<<<< HEAD
-    quantityBtn()
-    // qtyBtn()
-=======
     qtyBtn()
->>>>>>> qtyBtn
 };
 
 
@@ -28,11 +23,7 @@ function itemDisplay() {
     Object.values(cartItems).map(item => {
         let tr = document.createElement("tr");
         tr.innerHTML = `
-<<<<<<< HEAD
-        <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="btnQty decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="btnQty incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime" data-id = ${item.id}>Supprimer</td>
-=======
         <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="btnQty decBtn" data-id = ${item.id}></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="btnQty incBtn" data-id = ${item.id}></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime" data-id = ${item.id}>Supprimer</td>
->>>>>>> qtyBtn
         `;
         prodContainer.appendChild(tr);
         
