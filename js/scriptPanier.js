@@ -9,8 +9,12 @@ function cartDisplay() {
     };
 
     deleteBtn()
+<<<<<<< HEAD
     quantityBtn()
     // qtyBtn()
+=======
+    qtyBtn()
+>>>>>>> qtyBtn
 };
 
 
@@ -24,7 +28,11 @@ function itemDisplay() {
     Object.values(cartItems).map(item => {
         let tr = document.createElement("tr");
         tr.innerHTML = `
+<<<<<<< HEAD
         <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="btnQty decBtn"></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="btnQty incBtn"></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime" data-id = ${item.id}>Supprimer</td>
+=======
+        <td>${item.nom}</td><td class="tColor">${item.couleur}</td><td>${item.prix} €</td><ion-icon name="caret-back-outline" class="btnQty decBtn" data-id = ${item.id}></ion-icon><p class="qte">${item.qte}</p><ion-icon name="caret-forward-outline" class="btnQty incBtn" data-id = ${item.id}></ion-icon><td class="price">${item.prix * item.qte} €</td><td class="supprime" data-id = ${item.id}>Supprimer</td>
+>>>>>>> qtyBtn
         `;
         prodContainer.appendChild(tr);
         
@@ -68,39 +76,35 @@ function deleteBtn() {
     }; 
 };
 
-// Fonction qui permet d'augmenter ou de baisser la quantité des produits
-function quantityBtn() {
-    let decreaseBtn = document.querySelectorAll('.decBtn');
-    let increaseBtn = document.querySelectorAll('.incBtn');
+function qtyBtn() {
+    
     let cartItems = JSON.parse(localStorage.getItem('panier'));
     let productNb = parseInt(localStorage.getItem('quantity'));
-    let prixTotal = parseInt(localStorage.getItem('prixTotal'));
-
-    for(let i=0; i < decreaseBtn.length; i++) {
-        let productId = Object.keys(cartItems)[i];
-        
-        decreaseBtn[i].addEventListener('click', () => {
-
-            if(cartItems[productId].qte > 1) {
-                cartItems[productId].qte -= 1;
-                localStorage.setItem('panier', JSON.stringify(cartItems));
-                localStorage.setItem('quantity', productNb -1);
-                localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[productId].prix));
-                
-                cartDisplay();
-            }
-        });
-
-        increaseBtn[i].addEventListener('click', () => {
-            cartItems[productId].qte += 1;
+    let prixTotal = parseInt(localStorage.getItem('prixTotal')); 
+    let container = document.querySelector('.cont');
+    container.addEventListener('click', e => {
+        let incBtn = e.target;
+        let id = incBtn.dataset.id;
+        if (e.target.classList.contains('incBtn')) {            
+            cartItems[id].qte += 1;
             localStorage.setItem('panier', JSON.stringify(cartItems));
             localStorage.setItem('quantity', productNb + 1);
-            localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[productId].prix));
+            localStorage.setItem('prixTotal', prixTotal + parseInt(cartItems[id].prix));
             
             cartDisplay();
-        })
-    };
-};
+        }else if (e.target.classList.contains('decBtn')) {
+            if (cartItems[id].qte > 1){
+                cartItems[id].qte -= 1;
+                localStorage.setItem('panier', JSON.stringify(cartItems));
+                localStorage.setItem('quantity', productNb -1);
+                localStorage.setItem('prixTotal', prixTotal - parseInt(cartItems[id].prix));
+                    
+                cartDisplay();
+            }
+        }
+    })
+}
+
 
 
 let btnVider = document.querySelector('.videpanier');
